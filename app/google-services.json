@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "511956187671",
+    "project_id": "blue-pencil-ddf52",
+    "storage_bucket": "blue-pencil-ddf52.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511956187671:android:a9a90e1409f9e805263a52",
+        "android_client_info": {
+          "package_name": "com.example.bluepencil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511956187671-atsv3vv4jv5i85e5hfn60095edpgfubd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bluepencil",
+            "certificate_hash": "ad789e248237a226d4de0a17cfe039bb59870ea3"
+          }
+        },
+        {
+          "client_id": "511956187671-kcogl9tvlua5qniqjismj2d91lt66i1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA71TRfBsLLQdF_DcCyH96qcnL6tKBNBWE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511956187671-kcogl9tvlua5qniqjismj2d91lt66i1a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
