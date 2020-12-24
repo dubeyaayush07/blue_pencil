@@ -55,7 +55,7 @@
                 android:id="@+id/chip2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Deagify"
+                android:text="DeAgify"
                 app:chipBackgroundColor="#CC00E5FF" />
 
             <com.google.android.material.chip.Chip
