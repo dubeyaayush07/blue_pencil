@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
-    android:layout_gravity="center"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:layout_margin="16dp"
     card_view:cardCornerRadius="4dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,29 +21,29 @@
 
             <TextView
                 android:id="@+id/user_name"
+                style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_name"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/CardTextView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/price"
+                style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/price"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/CardTextView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="12dp">
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="8dp">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip1"
@@ -68,17 +69,14 @@
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/order_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginBottom="16dp"
             android:text="Order"
-            android:textColor="#FFFFFF"
-            app:rippleColor="@color/white" />
+            app:rippleColor="@color/white"
+            style="@style/btn_style" />
 
     </LinearLayout>
-
-
 
 
 </androidx.cardview.widget.CardView>

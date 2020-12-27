@@ -3,10 +3,11 @@ package com.example.bluepencil
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class PlacardAdapter: RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
+class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
 
     var data = listOf<Placard>()
         set(value) {
@@ -21,7 +22,7 @@ class PlacardAdapter: RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item, onClickListener)
     }
 
 
@@ -30,10 +31,15 @@ class PlacardAdapter: RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val userName: TextView = itemView.findViewById(R.id.user_name)
         val price: TextView = itemView.findViewById(R.id.price)
+        val orderButton: Button = itemView.findViewById(R.id.order_btn)
 
-        fun bind( item: Placard) {
+        fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
             price.text = getCurrencyString(item.cost)
+            orderButton.setOnClickListener {
+                onClickListener.onClick(item)
+            }
+
         }
 
         companion object {
@@ -43,6 +49,10 @@ class PlacardAdapter: RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
                 return ViewHolder(view)
             }
         }
+    }
+
+    class OnClickListener(val clickListener: (placard: Placard) -> Unit) {
+        fun onClick(placard: Placard) = clickListener(placard)
     }
 
 
