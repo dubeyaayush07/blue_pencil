@@ -1,8 +1,11 @@
 package com.example.bluepencil
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -33,7 +36,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = PlacardAdapter()
+        adapter = PlacardAdapter(PlacardAdapter.OnClickListener {
+            if (it != null) {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(it))
+            }
+        })
         binding.placardList.adapter = adapter
         fetchPlacards()
     }
@@ -67,5 +74,6 @@ class HomeFragment : Fragment() {
 
         return super.onOptionsItemSelected(item)
     }
+
 
 }
