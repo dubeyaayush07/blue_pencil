@@ -6,4 +6,6 @@
     <string name="sign_out">Sign out</string>
     <string name="user_name">User Name</string>
     <string name="price">Price</string>
+    <string name="home">Home</string>
+    <string name="inbox">Inbox</string>
 </resources>

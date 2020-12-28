@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.example.bluepencil.databinding.FragmentHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
@@ -36,6 +37,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
+        bottomNavigationView.visibility = View.VISIBLE
         adapter = PlacardAdapter(PlacardAdapter.OnClickListener {
             if (it != null) {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(it))
