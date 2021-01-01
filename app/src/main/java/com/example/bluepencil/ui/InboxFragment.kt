@@ -1,4 +1,4 @@
-package com.example.bluepencil
+package com.example.bluepencil.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.findNavController
+import com.example.bluepencil.model.Order
+import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentInboxBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth

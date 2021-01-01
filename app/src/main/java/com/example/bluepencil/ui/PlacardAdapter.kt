@@ -1,4 +1,4 @@
-package com.example.bluepencil
+package com.example.bluepencil.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bluepencil.model.Placard
+import com.example.bluepencil.R
+import com.example.bluepencil.getCurrencyString
 
 class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.example.bluepencil
+package com.example.bluepencil.ui
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -11,6 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
+import com.example.bluepencil.model.Order
+import com.example.bluepencil.model.Placard
+import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentOrderBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -19,8 +23,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.OnProgressListener
-import com.google.firebase.storage.UploadTask
 
 
 class OrderFragment : Fragment() {
@@ -42,14 +44,16 @@ class OrderFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
         placard = OrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
-        binding.uploadBtn.setOnClickListener {
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                type = "image/*"
-                startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
-            }
-        }
-
+        launchUpload()
         return binding.root
+    }
+
+
+    fun launchUpload() {
+        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            type = "image/*"
+            startActivityForResult(this, IMAGE_GALLERY_REQUEST_CODE)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -63,6 +67,8 @@ class OrderFragment : Fragment() {
 
                 }
             }
+        } else {
+            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToHomeFragment())
         }
     }
 
@@ -74,22 +80,23 @@ class OrderFragment : Fragment() {
 
         val imageRef = storageReference.child("images/" + user.uid + "/" + uri.lastPathSegment)
         val uploadTask = imageRef.putFile(uri)
-        binding.uploadBar.visibility = View.VISIBLE
+
 
         uploadTask.addOnProgressListener{
             val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
-            binding.uploadBar.progress = progress.toInt()
+            binding.progressView.text = "${progress.toInt()}%"
 
         }.addOnSuccessListener {
             val downloadUrl = imageRef.downloadUrl
             downloadUrl.addOnSuccessListener {
                 val url = it.toString()
-                binding.uploadBar.visibility = View.GONE
                 saveOrder(url, user.uid)
             }
 
         }.addOnFailureListener {
-            binding.uploadBar.visibility = View.GONE
+            Snackbar.make(binding.root, "Photo Upload Failure", Snackbar.LENGTH_LONG)
+                .show()
+            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToHomeFragment())
             Log.e(TAG, "Upload Failure")
         }
     }
@@ -102,6 +109,14 @@ class OrderFragment : Fragment() {
         task.addOnSuccessListener {
             Snackbar.make(binding.root, "Photo Uploaded", Snackbar.LENGTH_LONG)
                 .show()
+            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToHomeFragment())
+        }
+
+        task.addOnFailureListener {
+            Snackbar.make(binding.root, "Photo Upload Failure", Snackbar.LENGTH_LONG)
+                .show()
+            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToHomeFragment())
+
         }
     }
 
