@@ -1,4 +1,4 @@
-package com.example.bluepencil
+ package com.example.bluepencil.model
 
 import android.os.Parcel
 import android.os.Parcelable

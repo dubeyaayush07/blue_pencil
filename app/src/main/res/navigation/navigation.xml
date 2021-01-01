@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.bluepencil.HomeFragment"
+        android:name="com.example.bluepencil.ui.HomeFragment"
         android:label="Home">
         <action
             android:id="@+id/action_homeFragment_to_mainFragment"
@@ -30,12 +30,12 @@
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
-        android:name="com.example.bluepencil.OrderFragment"
+        android:name="com.example.bluepencil.ui.OrderFragment"
         android:label="Order"
         tools:layout="@layout/fragment_order">
         <argument
             android:name="selectedPlacard"
-            app:argType="com.example.bluepencil.Placard" />
+            app:argType="com.example.bluepencil.model.Placard" />
         <action
             android:id="@+id/action_orderFragment_to_homeFragment"
             app:destination="@id/homeFragment"
@@ -44,6 +44,28 @@
     </fragment>
     <fragment
         android:id="@+id/inboxFragment"
-        android:name="com.example.bluepencil.InboxFragment"
+        android:name="com.example.bluepencil.ui.InboxFragment"
         android:label="Inbox" />
+    <fragment
+        android:id="@+id/jobFragment"
+        android:name="com.example.bluepencil.ui.JobFragment"
+        android:label="@string/jobs"
+        tools:layout="@layout/fragment_job" >
+        <action
+            android:id="@+id/action_jobFragment_to_orderCompleteFragment"
+            app:destination="@id/orderCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderCompleteFragment"
+        android:name="com.example.bluepencil.ui.OrderCompleteFragment"
+        android:label="Complete Order">
+        <action
+            android:id="@+id/action_orderCompleteFragment_to_jobFragment"
+            app:destination="@id/jobFragment"
+            app:popUpTo="@id/orderCompleteFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="selectedOrder"
+            app:argType="com.example.bluepencil.model.Order" />
+    </fragment>
 </navigation>

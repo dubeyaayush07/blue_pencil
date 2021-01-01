@@ -10,4 +10,9 @@
         android:id="@+id/inboxFragment"
         android:icon="@drawable/ic_inbox"
         android:title="@string/inbox" />
+
+    <item
+        android:id="@+id/jobFragment"
+        android:icon="@drawable/ic_job"
+        android:title="@string/jobs" />
 </menu>
