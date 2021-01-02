@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_homeFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_payFragment"
+            app:destination="@id/payFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -68,4 +71,9 @@
             android:name="selectedOrder"
             app:argType="com.example.bluepencil.model.Order" />
     </fragment>
+    <fragment
+        android:id="@+id/payFragment"
+        android:name="com.example.bluepencil.ui.PayFragment"
+        android:label="fragment_pay"
+        tools:layout="@layout/fragment_pay" />
 </navigation>

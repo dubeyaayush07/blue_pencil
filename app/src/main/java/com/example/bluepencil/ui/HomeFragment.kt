@@ -71,6 +71,9 @@ class HomeFragment : Fragment() {
                 FirebaseAuth.getInstance().signOut()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMainFragment())
             }
+
+            R.id.pay_now -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPayFragment())
+
         }
 
         return super.onOptionsItemSelected(item)

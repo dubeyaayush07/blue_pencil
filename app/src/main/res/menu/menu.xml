@@ -4,4 +4,8 @@
     <item
         android:id="@+id/sign_out"
         android:title="@string/sign_out" />
+
+    <item
+        android:id="@+id/pay_now"
+        android:title="Pay" />
 </menu>
