@@ -82,7 +82,8 @@ class OrderCompleteFragment : Fragment() {
 
         uploadTask.addOnProgressListener{
             val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
-            binding.progressView.text = "${progress.toInt()}%"
+            binding.progressBar.progress = progress.toInt()
+            binding.progressTxt.text = "${progress.toInt()} %"
 
         }.addOnSuccessListener {
             val downloadUrl = imageRef.downloadUrl
@@ -101,7 +102,8 @@ class OrderCompleteFragment : Fragment() {
 
     private fun saveOrder(photoUrl: String) {
         val collection = Firebase.firestore.collection("orders")
-        val task = collection.document(order.id.toString()).update("jobUrl", photoUrl)
+        val task = collection.document(order.id.toString())
+            .update("jobUrl", photoUrl, "complete", true)
 
         task.addOnSuccessListener {
             Snackbar.make(binding.root, "Photo Uploaded", Snackbar.LENGTH_LONG)

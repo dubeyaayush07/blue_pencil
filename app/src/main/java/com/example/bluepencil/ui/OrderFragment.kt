@@ -84,7 +84,8 @@ class OrderFragment : Fragment() {
 
         uploadTask.addOnProgressListener{
             val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
-            binding.progressView.text = "${progress.toInt()}%"
+            binding.progressBar.progress = progress.toInt()
+            binding.progressTxt.text = "${progress.toInt()} %"
 
         }.addOnSuccessListener {
             val downloadUrl = imageRef.downloadUrl

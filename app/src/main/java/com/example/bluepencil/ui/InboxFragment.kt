@@ -12,6 +12,7 @@ import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentInboxBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -49,6 +50,7 @@ class InboxFragment : Fragment() {
     private fun fetchOrders() {
         val db = Firebase.firestore
         db.collection("orders")
+            .orderBy("date", Query.Direction.DESCENDING)
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { result ->

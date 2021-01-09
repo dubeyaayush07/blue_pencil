@@ -41,9 +41,8 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
 
         fun bind(item: Order, onClickListener: OnClickListener) {
             date.text = formatDate(item.date)
-            if (item.jobUrl.equals("")) {
-                orderStatus.text = "TODO"
-            } else orderStatus.text ="Completed"
+
+            orderStatus.text = "TODO"
 
             photoBtn.setOnClickListener { view->
                 Intent(Intent.ACTION_VIEW, Uri.parse(item.photoUrl)).apply {
