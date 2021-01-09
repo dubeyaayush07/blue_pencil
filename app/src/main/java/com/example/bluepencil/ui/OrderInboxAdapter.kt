@@ -42,7 +42,7 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
 
         fun bind(item: Order) {
             date.text = formatDate(item.date)
-            if (item.jobUrl.equals("")) {
+            if (item.complete == false) {
                 orderStatus.text = "Pending"
             } else {
                 orderStatus.text ="Completed"

@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.OrderCompleteFragment">
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
         <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="57dp"
-            android:layout_height="59dp"
-            android:indeterminate="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dp"
+            android:max="100"
+            android:progress="15"
+            android:scaleY="2" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+            android:id="@+id/progressTxt"
+            style="@style/CardTextView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="0%"
-            android:id="@+id/progressView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+            android:layout_marginTop="290dp"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:textSize="25sp"
+            android:text="0 %" />
+
+    </LinearLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>
