@@ -13,6 +13,7 @@ data class Order (
     var photoUrl: String? = "",
     var jobUrl: String? = "",
     var complete: Boolean? = false,
+    var remark: String? = "Beautify",
     var date: Date = Date()
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -22,6 +23,7 @@ data class Order (
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readString(),
         TODO("date")
     ) {
     }
@@ -33,6 +35,7 @@ data class Order (
         parcel.writeString(photoUrl)
         parcel.writeString(jobUrl)
         parcel.writeValue(complete)
+        parcel.writeString(remark)
     }
 
     override fun describeContents(): Int {

@@ -44,7 +44,10 @@ class OrderFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
         placard = OrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
-        launchUpload()
+
+        binding.uploadAndPayBtn.setOnClickListener {
+            launchUpload()
+        }
         return binding.root
     }
 
@@ -74,18 +77,20 @@ class OrderFragment : Fragment() {
 
 
     private fun uploadPhoto(path: String, user: FirebaseUser) {
+        Snackbar.make(binding.root, "Uploading...", Snackbar.LENGTH_LONG)
+            .show()
 
         val storageReference = FirebaseStorage.getInstance().getReference()
         val uri = Uri.parse(path)
 
         val imageRef = storageReference.child("images/" + user.uid + "/" + uri.lastPathSegment)
         val uploadTask = imageRef.putFile(uri)
+        binding.progressBar.visibility = View.VISIBLE
 
 
         uploadTask.addOnProgressListener{
             val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
             binding.progressBar.progress = progress.toInt()
-            binding.progressTxt.text = "${progress.toInt()} %"
 
         }.addOnSuccessListener {
             val downloadUrl = imageRef.downloadUrl
@@ -104,7 +109,11 @@ class OrderFragment : Fragment() {
 
     private fun saveOrder(photoUrl: String, userId: String) {
         val collection = Firebase.firestore.collection("orders")
-        val order = Order(userId = userId, editorId = placard.userId, photoUrl = photoUrl)
+        var remark: String = "Beautify"
+        if (!binding.remarkTxt.text.isNullOrBlank()) {
+            remark = binding.remarkTxt.text.toString()
+        }
+        val order = Order(userId = userId, editorId = placard.userId, photoUrl = photoUrl, remark = remark)
         val task = collection.add(order)
 
         task.addOnSuccessListener {
