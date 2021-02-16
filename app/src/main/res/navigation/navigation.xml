@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.bluepencil.MainFragment"
-        android:label="MainFragment" >
+        android:label="Blue Pencil">
         <action
             android:id="@+id/action_mainFragment_to_homeFragment"
             app:destination="@id/homeFragment"

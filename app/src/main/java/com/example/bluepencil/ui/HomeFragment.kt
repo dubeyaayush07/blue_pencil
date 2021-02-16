@@ -3,6 +3,7 @@ package com.example.bluepencil.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -24,10 +25,12 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: PlacardAdapter
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as AppCompatActivity).supportActionBar?.show()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         setHasOptionsMenu(true)
         return binding.root
