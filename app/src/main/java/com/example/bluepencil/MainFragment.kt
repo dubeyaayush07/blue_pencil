@@ -4,10 +4,13 @@ import LoginViewModel
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -34,6 +37,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as AppCompatActivity).supportActionBar?.hide()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
     }
@@ -42,7 +46,11 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
-        observeAuthenticationState()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            observeAuthenticationState()
+        }, 1800)
+
     }
 
     private fun observeAuthenticationState() {
