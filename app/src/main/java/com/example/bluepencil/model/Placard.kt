@@ -8,10 +8,12 @@ data class Placard (
     var cost: Int = 0,
     var userName: String? = "",
     var userId: String? = "",
+    var url: String? = "",
     var tags: List<String>? = null
-):Parcelable {
+): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.createStringArrayList()
@@ -22,6 +24,7 @@ data class Placard (
         parcel.writeInt(cost)
         parcel.writeString(userName)
         parcel.writeString(userId)
+        parcel.writeString(url)
         parcel.writeStringList(tags)
     }
 
