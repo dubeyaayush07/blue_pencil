@@ -6,12 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    app:strokeColor ="@color/colorPrimaryDark"
-    app:strokeWidth="1.5dp"
-    android:layout_margin="16dp"
+    android:layout_margin="12dp"
+    android:paddingTop="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
     app:cardElevation="6dp"
-    app:cardBackgroundColor="#FFFCFC"
-    app:cardCornerRadius="6dp">
+    app:strokeColor="#EEEEEE"
+    app:strokeWidth="1.5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,21 +23,31 @@
             android:id="@+id/editor_img"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            tools:src="@tools:sample/backgrounds/scenic"/>
-
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic" />
+        <View
+            android:layout_width="300dp"
+            android:layout_height="2dp"
+            android:background="#eeeeee"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="1dp">
 
             <TextView
                 android:id="@+id/user_name"
                 style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
                 android:text="@string/user_name"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,13 +56,18 @@
                 style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="@string/price"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.977"
+                app:layout_constraintStart_toEndOf="@+id/user_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.chip.ChipGroup
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -62,31 +78,49 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Beautify"
-                app:chipBackgroundColor="#CCFF5252" />
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2"
+                app:layout_constraintBaseline_toBaselineOf="@+id/chip2"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DeAgify"
-                app:chipBackgroundColor="#CC00E5FF" />
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/chip3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/chip1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:text="Repair"
-                app:chipBackgroundColor="#CCFDD835" />
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2"
+                app:layout_constraintBaseline_toBaselineOf="@+id/chip2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.879"
+                app:layout_constraintStart_toEndOf="@+id/chip2" />
 
-        </com.google.android.material.chip.ChipGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/order_btn"
+            style="@style/btn_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#42b72a"
             android:text="Order"
-            app:rippleColor="@color/white"
-            style="@style/btn_style" />
+            app:rippleColor="@color/white" />
 
     </LinearLayout>
 
