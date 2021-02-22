@@ -14,6 +14,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dp"
+            android:max="100"
+            android:progress="15"
+            android:visibility="gone"
+            android:scaleY="2" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -42,7 +54,7 @@
             android:id="@+id/view_photo_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Photo"
+            android:text="Original Photo"
             app:rippleColor="@color/white"
             style="@style/btn_style" />
 
