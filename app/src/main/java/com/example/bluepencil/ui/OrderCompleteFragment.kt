@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.io.IOException
 
 
 class OrderCompleteFragment : Fragment() {
@@ -45,8 +46,19 @@ class OrderCompleteFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
         order = OrderCompleteFragmentArgs.fromBundle(requireArguments()).selectedOrder
-        launchUpload()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (isOnline()) {
+            launchUpload()
+        } else {
+            Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
+                .show()
+            findNavController().navigate(OrderCompleteFragmentDirections.actionOrderCompleteFragmentToJobFragment())
+        }
     }
 
     fun launchUpload() {
@@ -115,6 +127,20 @@ class OrderCompleteFragment : Fragment() {
                 .show()
             findNavController().navigate(OrderCompleteFragmentDirections.actionOrderCompleteFragmentToJobFragment())
         }
+    }
+
+    fun isOnline(): Boolean {
+        val runtime = Runtime.getRuntime()
+        try {
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return false
     }
 
 

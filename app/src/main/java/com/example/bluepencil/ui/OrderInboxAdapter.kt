@@ -1,17 +1,26 @@
 package com.example.bluepencil.ui
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
-
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.example.bluepencil.model.Order
 import com.example.bluepencil.R
 import com.example.bluepencil.formatDate
+import com.example.bluepencil.model.Order
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
+
 
 class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
 
@@ -39,18 +48,18 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
         val date: TextView = itemView.findViewById(R.id.date)
         val photoBtn: Button = itemView.findViewById(R.id.view_photo_btn)
         val jobBtn: Button = itemView.findViewById(R.id.view_order_btn)
+        val progress: ProgressBar = itemView.findViewById(R.id.progress_bar)
 
         fun bind(item: Order) {
             date.text = formatDate(item.date)
             if (item.complete == false) {
                 orderStatus.text = "Pending"
+                jobBtn.visibility = View.GONE
             } else {
                 orderStatus.text ="Completed"
                 jobBtn.visibility = View.VISIBLE
                 jobBtn.setOnClickListener { view->
-                    Intent(Intent.ACTION_VIEW, Uri.parse(item.jobUrl)).apply {
-                        view.context.startActivity(this)
-                    }
+                    downloadAndOpenImage(view.context, item.jobUrl.toString())
                 }
             }
 
@@ -60,6 +69,42 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
                 }
             }
 
+        }
+
+        private fun downloadAndOpenImage(context: Context, url: String) {
+            val ref = FirebaseStorage.getInstance().getReferenceFromUrl(url)
+            val localFile = File(context.getExternalFilesDir(null)?.absolutePath.toString() + ref.name)
+
+            progress.visibility = View.VISIBLE
+
+            if (localFile.exists()) {
+                openImage(context, localFile)
+                progress.visibility = View.GONE
+            }
+            else {
+                ref.getFile(localFile).addOnSuccessListener {
+                    openImage(context, localFile)
+                    progress.visibility = View.GONE
+                }.addOnProgressListener {
+                    val prog = (100.0 * it.bytesTransferred) / it.totalByteCount
+                    progress.progress = prog.toInt()
+                }.addOnFailureListener {
+                    progress.visibility = View.GONE
+                    Toast.makeText(context, "Download Failed", Toast.LENGTH_LONG).show()
+                }
+            }
+
+
+
+        }
+
+        private fun openImage(context: Context, file: File) {
+            val intent = Intent()
+            intent.action = Intent.ACTION_VIEW
+            val uri = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".provider", file)
+            intent.setDataAndType(uri, "image/*")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            context.startActivity(intent)
         }
 
         companion object {

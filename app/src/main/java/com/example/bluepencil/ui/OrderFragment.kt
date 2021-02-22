@@ -6,16 +6,16 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.bluepencil.model.Order
-import com.example.bluepencil.model.Placard
 import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentOrderBinding
+import com.example.bluepencil.model.Order
+import com.example.bluepencil.model.Placard
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import java.io.IOException
 
 
 class OrderFragment : Fragment() {
@@ -44,11 +45,21 @@ class OrderFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
         placard = OrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
-
-        binding.uploadAndPayBtn.setOnClickListener {
-            launchUpload()
-        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.uploadAndPayBtn.setOnClickListener {
+            if (isOnline()) {
+                launchUpload()
+            } else {
+                Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
+                    .show()
+
+            }
+
+        }
     }
 
 
@@ -113,7 +124,12 @@ class OrderFragment : Fragment() {
         if (!binding.remarkTxt.text.isNullOrBlank()) {
             remark = binding.remarkTxt.text.toString()
         }
-        val order = Order(userId = userId, editorId = placard.userId, photoUrl = photoUrl, remark = remark)
+        val order = Order(
+            userId = userId,
+            editorId = placard.userId,
+            photoUrl = photoUrl,
+            remark = remark
+        )
         val task = collection.add(order)
 
         task.addOnSuccessListener {
@@ -128,6 +144,20 @@ class OrderFragment : Fragment() {
             findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToHomeFragment())
 
         }
+    }
+
+    fun isOnline(): Boolean {
+        val runtime = Runtime.getRuntime()
+        try {
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return false
     }
 
 }
