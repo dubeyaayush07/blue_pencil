@@ -2,7 +2,6 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,11 +19,11 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/order_status"
+                android:id="@+id/order_remark"
                 style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TODO"
+                android:text="Beautify"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,32 +38,47 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            android:gravity="center"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="8dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/view_photo_btn"
-                style="@style/btn_style"
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Photo"
-                app:rippleColor="@color/white" />
+                android:text="Photo 1"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/complete_order_btn"
-                style="@style/btn_style"
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Complete Order"
-                app:rippleColor="@color/white" />
+                android:text="Photo 2"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photo 3"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
+
+        </com.google.android.material.chip.ChipGroup>
 
 
-        </LinearLayout>
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/complete_order_btn"
+            style="@style/btn_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Complete Order"
+            app:rippleColor="@color/white" />
 
 
     </LinearLayout>

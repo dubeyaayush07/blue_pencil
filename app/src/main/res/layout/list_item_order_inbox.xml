@@ -50,23 +50,40 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/view_photo_btn"
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Original Photo"
-            app:rippleColor="@color/white"
-            style="@style/btn_style" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/view_order_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edited Photo"
+            android:layout_marginStart="12dp"
             android:visibility="gone"
-            app:rippleColor="@color/white"
-            style="@style/btn_style" />
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photo 1"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photo 2"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Photo 3"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
+
+        </com.google.android.material.chip.ChipGroup>
+
 
     </LinearLayout>
 

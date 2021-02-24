@@ -55,6 +55,9 @@ class InboxFragment : Fragment() {
             .get()
             .addOnSuccessListener { result ->
                 adapter.data = result.toObjects(Order::class.java)
+                if (adapter.itemCount == 0) {
+                    binding.emptyTxt.visibility = View.VISIBLE
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents.", exception)

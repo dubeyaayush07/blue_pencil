@@ -1,5 +1,7 @@
 package com.example.bluepencil.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.bluepencil.model.Placard
 import com.example.bluepencil.R
 import com.example.bluepencil.getCurrencyString
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView.Adapter<PlacardAdapter.ViewHolder>() {
 
@@ -40,6 +44,7 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
         val price: TextView = itemView.findViewById(R.id.price)
         val orderButton: Button = itemView.findViewById(R.id.order_btn)
         val editorImgView: ImageView = itemView.findViewById((R.id.editor_img))
+        val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
 
         fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
@@ -58,6 +63,19 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
                     .into(editorImgView)
             }
 
+            val size = item.tags?.size ?: 0
+
+            for (i in 0..2) {
+                val v: View = chipGroup.getChildAt(i)
+                if (v is Chip) {
+                    if (i < size) {
+                        v.visibility = View.VISIBLE
+                        v.text = item.tags?.get(i)
+                    } else {
+                        v.visibility = View.GONE
+                    }
+                }
+            }
 
         }
 

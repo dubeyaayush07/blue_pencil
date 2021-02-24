@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bluepencil.model.Order
 import com.example.bluepencil.R
 import com.example.bluepencil.formatDate
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerView.Adapter<OrderJobAdapter.ViewHolder>() {
 
@@ -34,19 +36,30 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
     override fun getItemCount(): Int = data.size
 
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val orderStatus: TextView = itemView.findViewById(R.id.order_status)
+        val orderRemark: TextView = itemView.findViewById(R.id.order_remark)
         val date: TextView = itemView.findViewById(R.id.date)
-        val photoBtn: Button = itemView.findViewById(R.id.view_photo_btn)
         val completeOrderBtn: Button = itemView.findViewById(R.id.complete_order_btn)
+        val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
 
         fun bind(item: Order, onClickListener: OnClickListener) {
             date.text = formatDate(item.date)
+            orderRemark.text = item.remark
 
-            orderStatus.text = "TODO"
+            val size = item.photoUrls?.size ?: 0
 
-            photoBtn.setOnClickListener { view->
-                Intent(Intent.ACTION_VIEW, Uri.parse(item.photoUrl)).apply {
-                    view.context.startActivity(this)
+            for (i in 0..2) {
+                val v: View = chipGroup.getChildAt(i)
+                if (v is Chip) {
+                    if (i < size) {
+                        v.visibility = View.VISIBLE
+                        v.setOnClickListener {
+                            Intent(Intent.ACTION_VIEW, Uri.parse(item.photoUrls?.get(i))).apply {
+                                v.context.startActivity(this)
+                            }
+                        }
+                    } else {
+                        v.visibility = View.GONE
+                    }
                 }
             }
 

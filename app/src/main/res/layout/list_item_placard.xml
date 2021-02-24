@@ -66,7 +66,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,9 +79,7 @@
                 android:layout_height="wrap_content"
                 android:text="Beautify"
                 android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2"
-                app:layout_constraintBaseline_toBaselineOf="@+id/chip2"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:chipBackgroundColor="#1877f2" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip2"
@@ -89,29 +87,17 @@
                 android:layout_height="wrap_content"
                 android:text="DeAgify"
                 android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/chip3"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/chip1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:chipBackgroundColor="#1877f2" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="Repair"
                 android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2"
-                app:layout_constraintBaseline_toBaselineOf="@+id/chip2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.879"
-                app:layout_constraintStart_toEndOf="@+id/chip2" />
+                app:chipBackgroundColor="#1877f2" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/order_btn"

@@ -58,8 +58,10 @@ class JobFragment : Fragment() {
             .whereEqualTo("complete", false)
             .get()
             .addOnSuccessListener { result ->
-
                 adapter.data = result.toObjects(Order::class.java)
+                if (adapter.itemCount == 0) {
+                    binding.contactTxt.visibility = View.VISIBLE
+                }
             }
             .addOnFailureListener { exception ->
                 Log.w(InboxFragment.TAG, "Error getting documents.", exception)
