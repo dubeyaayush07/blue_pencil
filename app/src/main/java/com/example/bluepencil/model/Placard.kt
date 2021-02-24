@@ -9,7 +9,7 @@ data class Placard (
     var userName: String? = "",
     var userId: String? = "",
     var url: String? = "",
-    var tags: List<String>? = null
+    var tags: List<String?>? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

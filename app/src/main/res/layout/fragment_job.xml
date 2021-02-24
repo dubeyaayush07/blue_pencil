@@ -9,6 +9,20 @@
         android:background="#f0f2f5"
         tools:context=".ui.JobFragment">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Want to be an editor?\n Contact us at officalbluepencil@gmail.com"
+            android:gravity="center"
+            android:id="@+id/contact_txt"
+            android:visibility="gone"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/order_list"
             android:layout_width="0dp"

@@ -10,8 +10,8 @@ data class Order (
     var id: String? = "",
     var userId: String? = "",
     var editorId: String? = "",
-    var photoUrl: String? = "",
-    var jobUrl: String? = "",
+    var photoUrls: List<String?>?= null,
+    var jobUrls: List<String?>?= null,
     var complete: Boolean? = false,
     var remark: String? = "Beautify",
     var date: Date = Date()
@@ -20,8 +20,8 @@ data class Order (
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.createStringArrayList(),
+        parcel.createStringArrayList(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.readString(),
         TODO("date")
@@ -32,8 +32,8 @@ data class Order (
         parcel.writeString(id)
         parcel.writeString(userId)
         parcel.writeString(editorId)
-        parcel.writeString(photoUrl)
-        parcel.writeString(jobUrl)
+        parcel.writeStringList(photoUrls)
+        parcel.writeStringList(jobUrls)
         parcel.writeValue(complete)
         parcel.writeString(remark)
     }

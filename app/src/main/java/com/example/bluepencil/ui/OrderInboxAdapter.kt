@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bluepencil.R
 import com.example.bluepencil.formatDate
 import com.example.bluepencil.model.Order
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
@@ -46,29 +48,38 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val orderStatus: TextView = itemView.findViewById(R.id.order_status)
         val date: TextView = itemView.findViewById(R.id.date)
-        val photoBtn: Button = itemView.findViewById(R.id.view_photo_btn)
-        val jobBtn: Button = itemView.findViewById(R.id.view_order_btn)
         val progress: ProgressBar = itemView.findViewById(R.id.progress_bar)
+        val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
 
         fun bind(item: Order) {
             date.text = formatDate(item.date)
             if (item.complete == false) {
                 orderStatus.text = "Pending"
-                jobBtn.visibility = View.GONE
+                chipGroup.visibility = View.GONE
             } else {
                 orderStatus.text ="Completed"
-                jobBtn.visibility = View.VISIBLE
-                jobBtn.setOnClickListener { view->
-                    downloadAndOpenImage(view.context, item.jobUrl.toString())
-                }
+                chipGroup.visibility = View.VISIBLE
+                configureChips(item)
+
             }
 
-            photoBtn.setOnClickListener { view->
-                Intent(Intent.ACTION_VIEW, Uri.parse(item.photoUrl)).apply {
-                    view.context.startActivity(this)
+        }
+
+        private fun configureChips(order: Order) {
+            val size = order.jobUrls?.size ?: 0
+            for (i in 0..2) {
+                val v: View = chipGroup.getChildAt(i)
+                if (v is Chip) {
+                    if (i < size) {
+                        v.visibility = View.VISIBLE
+                        v.setOnClickListener {
+                            downloadAndOpenImage(it.context, order.jobUrls?.get(i) ?: "")
+                        }
+                    } else {
+                        v.visibility = View.GONE
+                    }
                 }
             }
-
         }
 
         private fun downloadAndOpenImage(context: Context, url: String) {

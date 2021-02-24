@@ -54,6 +54,7 @@ class HomeFragment : Fragment() {
         db.collection("placards")
             .get()
             .addOnSuccessListener { result ->
+                binding.loadingBar.visibility = View.GONE
                 adapter.data = result.toObjects(Placard::class.java)
             }
             .addOnFailureListener { exception ->
