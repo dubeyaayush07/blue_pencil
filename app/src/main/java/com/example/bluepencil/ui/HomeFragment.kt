@@ -3,6 +3,7 @@ package com.example.bluepencil.ui
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
@@ -25,6 +26,18 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: PlacardAdapter
 
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                   requireActivity().finish()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +88,12 @@ class HomeFragment : Fragment() {
                 FirebaseAuth.getInstance().signOut()
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToMainFragment())
             }
+
+            R.id.info -> {
+               findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToInfoFragment())
+            }
+
+
         }
 
         return super.onOptionsItemSelected(item)
