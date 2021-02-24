@@ -2,14 +2,16 @@ package com.example.bluepencil.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
-import com.example.bluepencil.model.Order
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentInboxBinding
+import com.example.bluepencil.model.Order
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
@@ -26,6 +28,18 @@ class InboxFragment : Fragment() {
     private lateinit var binding: FragmentInboxBinding
     private lateinit var adapter: OrderInboxAdapter
     private lateinit var userId: String
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(InboxFragmentDirections.actionInboxFragmentToHomeFragment())
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
 
     override fun onCreateView(
