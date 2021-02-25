@@ -7,7 +7,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#010066"
         tools:context=".MainFragment">
+
 
         <ImageView
             android:id="@+id/imageView"
@@ -18,6 +20,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logo3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
