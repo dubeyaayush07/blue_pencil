@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.bluepencil.model.Placard
 import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentHomeBinding
+import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore

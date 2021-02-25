@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentInboxBinding
 import com.example.bluepencil.databinding.FragmentInfoBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class InfoFragment : Fragment() {
@@ -20,6 +21,8 @@ class InfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
+        bottomNavigationView.visibility = View.GONE
         return binding.root
     }
 

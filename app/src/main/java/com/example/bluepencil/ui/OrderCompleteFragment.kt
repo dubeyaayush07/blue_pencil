@@ -71,7 +71,6 @@ class OrderCompleteFragment : Fragment() {
                 } else {
                     Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
                         .show()
-
                 }
             } else {
                 Snackbar.make(binding.root, "You need to upload $count images", Snackbar.LENGTH_LONG)

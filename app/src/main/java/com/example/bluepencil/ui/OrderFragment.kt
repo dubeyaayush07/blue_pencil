@@ -26,6 +26,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.IOException
+import kotlin.random.Random
 
 
 class OrderFragment : Fragment() {
@@ -34,11 +35,12 @@ class OrderFragment : Fragment() {
     private lateinit var placard: Placard
 
     private val IMAGE_GALLERY_REQUEST_CODE: Int = 2001
+    private val UPI_PAYMENT: Int = 12345
 
     private var url1: String? = null
     private var url2: String? = null
     private var url3: String? = null
-
+    private var count: Int = 0
 
     companion object {
         const val TAG = "OrderFragment"
@@ -49,7 +51,8 @@ class OrderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false)
-        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
+        val bottomNavigationView: BottomNavigationView =
+            requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
         placard = OrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
         return binding.root
@@ -59,8 +62,7 @@ class OrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.orderBtn.setOnClickListener {
             if (isOnline()) {
-                var user = FirebaseAuth.getInstance().currentUser
-                if (user != null) saveOrder(user.uid)
+                payUsingUpi()
             } else {
                 Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
                     .show()
@@ -79,6 +81,33 @@ class OrderFragment : Fragment() {
         }
     }
 
+    private fun payUsingUpi() {
+        if (count == 0) {
+            Snackbar.make(
+                binding.root,
+                "You need to select at least one image",
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+            return
+        }
+
+        val amount = placard.cost * count
+
+        val uri = Uri.parse("upi://pay").buildUpon()
+            .appendQueryParameter("pa", "9131455619@okbizaxis")
+            .appendQueryParameter("pn", placard.userName)
+            .appendQueryParameter("tn", "Order Payment")
+            .appendQueryParameter("am", "1")
+            .appendQueryParameter("cu", "INR")
+            .build()
+        val upiPayIntent = Intent(Intent.ACTION_VIEW)
+        upiPayIntent.data = uri
+        val chooser = Intent.createChooser(upiPayIntent, "Pay with")
+        startActivityForResult(chooser, UPI_PAYMENT)
+
+    }
+
 
     private fun launchUpload() {
         Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
@@ -93,13 +122,74 @@ class OrderFragment : Fragment() {
             if (requestCode == IMAGE_GALLERY_REQUEST_CODE) {
                 if (data != null && data.data != null) {
                     val uri = data.data
-                    var user = FirebaseAuth.getInstance().currentUser
+                    val user = FirebaseAuth.getInstance().currentUser
                     if (user != null && uri != null) uploadPhoto(uri, user)
+                }
+            } else if (requestCode == UPI_PAYMENT) {
+                if (data != null) {
+                    val trxt = data.getStringExtra("response")
+                    Log.e("UPI", "onActivityResult: $trxt")
+                    val dataList: ArrayList<String?> = ArrayList()
+                    dataList.add(trxt)
+                    upiPaymentDataOperation(dataList)
+                } else {
+                    Log.e("UPI", "onActivityResult: " + "Return data is null")
+                    val dataList: ArrayList<String?> = ArrayList()
+                    dataList.add("nothing")
+                    upiPaymentDataOperation(dataList)
                 }
             }
         } else {
-            Snackbar.make(binding.root, "Failed to load image", Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, "Operation Failed", Snackbar.LENGTH_LONG)
                 .show()
+        }
+    }
+
+    private fun upiPaymentDataOperation(data: ArrayList<String?>) {
+        if (true) {
+            var str = data[0]
+            Log.e("UPIPAY", "upiPaymentDataOperation: $str")
+            var paymentCancel = ""
+            if (str == null) str = "discard"
+            var status = ""
+            var approvalRefNo = ""
+            val response = str.split("&").toTypedArray()
+            for (i in response.indices) {
+                val equalStr = response[i].split("=").toTypedArray()
+                if (equalStr.size >= 2) {
+                    if (equalStr[0].toLowerCase() == "Status".toLowerCase()) {
+                        status = equalStr[1].toLowerCase()
+                    } else if (equalStr[0].toLowerCase() == "ApprovalRefNo".toLowerCase() || equalStr[0].toLowerCase() == "txnRef".toLowerCase()) {
+                        approvalRefNo = equalStr[1]
+                    }
+                } else {
+                    paymentCancel = "Payment cancelled by user."
+                }
+            }
+            if (status == "success") {
+                //Code to handle successful transaction here.
+                val user = FirebaseAuth.getInstance().currentUser
+                if (user != null) saveOrder(user.uid)
+                Log.e("UPI", "payment successfull: $approvalRefNo")
+            } else if ("Payment cancelled by user." == paymentCancel) {
+                Snackbar.make(binding.root, "Payment cancelled by user.", Snackbar.LENGTH_SHORT)
+                    .show()
+                Log.e("UPI", "Cancelled by user: $approvalRefNo")
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    "Transaction failed. Please try again",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                Log.e("UPI", "failed payment: $approvalRefNo")
+            }
+        } else {
+            Log.e("UPI", "Internet issue: ")
+            Snackbar.make(
+                binding.root,
+                "Internet connection is not available. Please check and try again",
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -113,7 +203,7 @@ class OrderFragment : Fragment() {
         val uploadTask = imageRef.putFile(uri)
         binding.progressBar.visibility = View.VISIBLE
 
-        uploadTask.addOnProgressListener{
+        uploadTask.addOnProgressListener {
             val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
             binding.progressBar.progress = progress.toInt()
 
@@ -136,16 +226,19 @@ class OrderFragment : Fragment() {
         when {
             url1 == null -> {
                 url1 = url
+                count = 1
                 binding.imgView1.visibility = View.VISIBLE
                 displayImage(binding.imgView1, uri)
             }
             url2 == null -> {
                 url2 = url
+                count = 2
                 binding.imgView2.visibility = View.VISIBLE
                 displayImage(binding.imgView2, uri)
             }
             else -> {
                 url3 = url
+                count = 3
                 binding.imgView3.visibility = View.VISIBLE
                 binding.addBtn.visibility = View.GONE
                 displayImage(binding.imgView3, uri)
@@ -162,12 +255,6 @@ class OrderFragment : Fragment() {
 
 
     private fun saveOrder(userId: String) {
-
-        if (url1 == null) {
-            Snackbar.make(binding.root, "You need to select at least one image", Snackbar.LENGTH_LONG)
-                .show()
-            return
-        }
         val collection = Firebase.firestore.collection("orders")
         var remark: String = "Beautify"
         if (!binding.remarkTxt.text.isNullOrBlank()) {
@@ -188,14 +275,14 @@ class OrderFragment : Fragment() {
         }
 
         task.addOnFailureListener {
-            Snackbar.make(binding.root, "Failed to take your order", Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, "Failed to take your order please contact support", Snackbar.LENGTH_LONG)
                 .show()
         }
     }
 
     private fun getUrlList(): List<String?> {
-        if (url2 == null) return listOf(url1)
-        else if (url3 == null) return listOf(url1, url2)
+        if (count == 1) return listOf(url1)
+        else if (count == 2) return listOf(url1, url2)
         else return listOf(url1, url2, url3)
     }
 

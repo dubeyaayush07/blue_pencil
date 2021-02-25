@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -32,6 +33,18 @@ class MainFragment : Fragment() {
     }
     private val viewModel by viewModels<LoginViewModel>()
     private lateinit var binding: FragmentMainBinding
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true /* enabled by default */) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +92,7 @@ class MainFragment : Fragment() {
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
+                // response.getError().getErrorCode() and handle the error
                 Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
@@ -91,7 +104,6 @@ class MainFragment : Fragment() {
         // they will need to create a password as well
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
-            //
         )
 
         // Create and launch sign-in intent.
