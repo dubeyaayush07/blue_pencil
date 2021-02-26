@@ -53,12 +53,14 @@ class MainFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.hide()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
+
 
         Handler(Looper.getMainLooper()).postDelayed({
             observeAuthenticationState()

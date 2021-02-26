@@ -8,14 +8,19 @@
         android:background="#f0f2f5"
         tools:context=".ui.HomeFragment">
 
-        <ProgressBar
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:id="@+id/loading_bar"
+            style="@style/SpinKitView.RotatingCircle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:SpinKit_Color="#1877f2"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/placard_list"
