@@ -94,6 +94,10 @@ class HomeFragment : Fragment() {
                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToInfoFragment())
             }
 
+            R.id.contact -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToContactFragment())
+            }
+
 
         }
 
