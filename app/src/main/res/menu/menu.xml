@@ -11,4 +11,11 @@
         android:icon="@drawable/ic_info"
         android:title="Info"
         app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/contact"
+        android:icon="@drawable/ic_contact"
+        android:title="Support"
+        app:showAsAction="always" />
 </menu>
