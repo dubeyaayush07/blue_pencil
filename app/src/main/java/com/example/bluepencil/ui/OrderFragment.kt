@@ -98,7 +98,7 @@ class OrderFragment : Fragment() {
             .appendQueryParameter("pa", "9131455619@okbizaxis")
             .appendQueryParameter("pn", placard.userName)
             .appendQueryParameter("tn", "Order Payment")
-            .appendQueryParameter("am", "1")
+            .appendQueryParameter("am", "$amount")
             .appendQueryParameter("cu", "INR")
             .build()
         val upiPayIntent = Intent(Intent.ACTION_VIEW)

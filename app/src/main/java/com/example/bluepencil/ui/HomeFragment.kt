@@ -11,11 +11,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.bluepencil.model.Placard
 import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentHomeBinding
+import com.example.bluepencil.model.User
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class HomeFragment : Fragment() {
@@ -62,6 +64,8 @@ class HomeFragment : Fragment() {
         binding.placardList.adapter = adapter
         fetchPlacards()
     }
+
+
 
     private fun fetchPlacards() {
         val db = Firebase.firestore
