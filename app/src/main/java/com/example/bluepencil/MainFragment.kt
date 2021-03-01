@@ -18,10 +18,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.bluepencil.databinding.FragmentMainBinding
+import com.example.bluepencil.model.Order
+import com.example.bluepencil.model.User
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class MainFragment : Fragment() {
@@ -73,6 +78,7 @@ class MainFragment : Fragment() {
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
+                    checkUser()
                     findNavController().navigate(MainFragmentDirections.actionMainFragmentToHomeFragment())
                 }
                 else -> {
@@ -86,11 +92,7 @@ class MainFragment : Fragment() {
         if (requestCode == SIGN_IN_RESULT_CODE) {
             val response = IdpResponse.fromResultIntent(data)
             if (resultCode == Activity.RESULT_OK) {
-                // User successfully signed in
-                Log.i(
-                    TAG,
-                    "Successfully signed in user ${FirebaseAuth.getInstance().currentUser?.displayName}!"
-                )
+
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -98,6 +100,25 @@ class MainFragment : Fragment() {
                 Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
             }
         }
+    }
+
+    private fun checkUser() {
+        val collection = Firebase.firestore.collection("users")
+        val user = FirebaseAuth.getInstance().currentUser
+        collection.whereEqualTo("uid", "${user?.uid}").get()
+            .addOnSuccessListener { document ->
+                if(document.isEmpty)
+                    FirebaseMessaging.getInstance().token
+                        .addOnSuccessListener {
+                            val newUser = User(
+                                uid = user?.uid,
+                                name = user?.displayName,
+                                token = it
+                            )
+                            collection.add(newUser)
+                        }
+            }
+
     }
 
     private fun launchSignInFlow() {

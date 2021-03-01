@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -45,6 +46,7 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
         val orderButton: Button = itemView.findViewById(R.id.order_btn)
         val editorImgView: ImageView = itemView.findViewById((R.id.editor_img))
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
+        val verify: ImageView = itemView.findViewById(R.id.verify)
 
         fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
@@ -75,6 +77,10 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
                         v.visibility = View.GONE
                     }
                 }
+            }
+
+            verify.setOnClickListener {
+                Toast.makeText(it.context, "Verified", Toast.LENGTH_SHORT).show()
             }
 
         }
