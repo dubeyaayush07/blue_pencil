@@ -97,7 +97,7 @@
     <fragment
         android:id="@+id/contactFragment"
         android:name="com.example.bluepencil.ui.ContactFragment"
-        android:label="ContactFragment" >
+        android:label="Support">
         <action
             android:id="@+id/action_contactFragment_to_homeFragment"
             app:destination="@id/homeFragment"
