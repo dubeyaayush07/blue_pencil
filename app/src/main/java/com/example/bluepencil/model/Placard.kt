@@ -9,10 +9,12 @@ data class Placard (
     var userName: String? = "",
     var userId: String? = "",
     var url: String? = "",
+    var type: String? = "",
     var tags: List<String?>? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
+        parcel.readString(),
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -25,6 +27,7 @@ data class Placard (
         parcel.writeString(userName)
         parcel.writeString(userId)
         parcel.writeString(url)
+        parcel.writeString(type)
         parcel.writeStringList(tags)
     }
 

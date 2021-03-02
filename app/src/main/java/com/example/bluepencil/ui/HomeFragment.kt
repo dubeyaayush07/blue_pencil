@@ -57,8 +57,10 @@ class HomeFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.VISIBLE
         adapter = PlacardAdapter(PlacardAdapter.OnClickListener {
-            if (it != null) {
+            if (it.type == "photo") {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(it))
+            } else {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGraphicOrderFragment(it))
             }
         })
         binding.placardList.adapter = adapter
