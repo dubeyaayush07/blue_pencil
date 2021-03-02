@@ -56,7 +56,12 @@ class JobFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.VISIBLE
         adapter = OrderJobAdapter(OrderJobAdapter.OnClickListener {
-            findNavController().navigate(JobFragmentDirections.actionJobFragmentToOrderCompleteFragment(it))
+            if (it.type == "photo") {
+                findNavController().navigate(JobFragmentDirections.actionJobFragmentToOrderCompleteFragment(it))
+            } else {
+                findNavController().navigate(JobFragmentDirections.actionJobFragmentToGraphicOrderComplete(it))
+            }
+
         })
         binding.orderList.adapter = adapter
         fetchOrders()

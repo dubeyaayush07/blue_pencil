@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:text="Beautify"
                 android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2" />
+                app:chipBackgroundColor="#00449C" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip2"

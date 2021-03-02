@@ -38,12 +38,14 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val orderRemark: TextView = itemView.findViewById(R.id.order_remark)
         val date: TextView = itemView.findViewById(R.id.date)
+        val orderType: TextView = itemView.findViewById(R.id.order_type)
         val completeOrderBtn: Button = itemView.findViewById(R.id.complete_order_btn)
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
 
         fun bind(item: Order, onClickListener: OnClickListener) {
             date.text = formatDate(item.date)
             orderRemark.text = item.remark
+            orderType.text = if (item.type == "photo") "Photo" else "Graphic"
 
             val size = item.photoUrls?.size ?: 0
 
