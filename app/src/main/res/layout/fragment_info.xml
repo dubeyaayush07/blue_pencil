@@ -71,7 +71,7 @@
                 android:fontFamily="sans-serif-light"
                 android:letterSpacing="0.05"
                 android:lineSpacingExtra="1dp"
-                android:text="We feel that every photo and design demands a Human Touch and Creativity to give a distinct and attractive look.We aim to work with you to create what you need.We connect the Professionals to the People in need, Hence eliminating the excessive search and provide a Hassle Free Platform to both sides."
+                android:text="@string/about"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textFontWeight="350"

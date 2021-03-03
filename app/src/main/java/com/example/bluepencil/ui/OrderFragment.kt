@@ -89,10 +89,6 @@ class OrderFragment : Fragment() {
                 Snackbar.LENGTH_LONG
             ).show()
             return
-        } else {
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) saveOrder(user.uid)
-            return
         }
 
         val amount = placard.cost * count

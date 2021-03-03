@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -47,10 +48,14 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
         val editorImgView: ImageView = itemView.findViewById((R.id.editor_img))
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
         val verify: ImageView = itemView.findViewById(R.id.verify)
+        val tag: TextView = itemView.findViewById(R.id.editor_tag)
 
         fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
             price.text = getCurrencyString(item.cost)
+            tag.text = if (item.type == "photo") "Photo Editor" else "Graphic Designer"
+
+
             orderButton.setOnClickListener {
                 onClickListener.onClick(item)
             }
