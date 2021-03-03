@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/EditorTag"
+                android:id="@+id/editor_tag"
                 style="@style/CardTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"

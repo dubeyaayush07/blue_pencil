@@ -80,7 +80,7 @@ class GraphicOrderComplete : Fragment() {
                 }
             }
         } else {
-            Snackbar.make(binding.root, "Failed to load image", Snackbar.LENGTH_LONG)
+            Snackbar.make(binding.root, "Operation Failed", Snackbar.LENGTH_LONG)
                 .show()
 
             findNavController().navigate(GraphicOrderCompleteDirections.actionGraphicOrderCompleteToJobFragment())
