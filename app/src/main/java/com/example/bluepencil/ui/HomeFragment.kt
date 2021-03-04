@@ -63,6 +63,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGraphicOrderFragment(it))
             }
         })
+
         binding.placardList.adapter = adapter
         fetchPlacards()
     }

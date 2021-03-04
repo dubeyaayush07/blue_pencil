@@ -89,6 +89,10 @@ class OrderFragment : Fragment() {
                 Snackbar.LENGTH_LONG
             ).show()
             return
+        } else {
+            val user = FirebaseAuth.getInstance().currentUser
+            if (user != null) saveOrder(user.uid)
+            return
         }
 
         val amount = placard.cost * count
@@ -264,14 +268,15 @@ class OrderFragment : Fragment() {
             editorId = placard.userId,
             photoUrls = getUrlList(),
             remark = remark,
-            type = placard.type
+            type = placard.type,
+            editorName = placard.userName
         )
         val task = collection.add(order)
 
         task.addOnSuccessListener {
             Snackbar.make(binding.root, "Order submitted successfully", Snackbar.LENGTH_LONG)
                 .show()
-            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToHomeFragment())
+            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToInboxFragment())
         }
 
         task.addOnFailureListener {

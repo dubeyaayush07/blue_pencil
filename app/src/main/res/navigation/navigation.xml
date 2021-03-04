@@ -46,9 +46,9 @@
             android:name="selectedPlacard"
             app:argType="com.example.bluepencil.model.Placard" />
         <action
-            android:id="@+id/action_orderFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/orderFragment"
+            android:id="@+id/action_orderFragment_to_inboxFragment"
+            app:destination="@id/inboxFragment"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -117,9 +117,9 @@
             android:name="selectedPlacard"
             app:argType="com.example.bluepencil.model.Placard" />
         <action
-            android:id="@+id/action_graphicOrderFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/graphicOrderFragment"
+            android:id="@+id/action_graphicOrderFragment_to_inboxFragment"
+            app:destination="@id/inboxFragment"
+            app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
