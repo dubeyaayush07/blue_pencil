@@ -50,9 +50,14 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
         val date: TextView = itemView.findViewById(R.id.date)
         val progress: ProgressBar = itemView.findViewById(R.id.progress_bar)
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
+        val editorNameTxt: TextView = itemView.findViewById(R.id.artist_name)
+        val orderTypeTxt: TextView = itemView.findViewById(R.id.order_type)
 
         fun bind(item: Order) {
             date.text = formatDate(item.date)
+            editorNameTxt.text = item.editorName
+            orderTypeTxt.text = if (item.type == "photo") "Photo" else "Graphic"
+
             if (item.complete == false) {
                 orderStatus.text = "Pending"
                 chipGroup.visibility = View.GONE
