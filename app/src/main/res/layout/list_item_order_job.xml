@@ -9,7 +9,7 @@
     android:layout_gravity="center"
     android:layout_margin="20dp"
     app:cardElevation="3dp"
-    card_view:cardCornerRadius="25dp"
+    card_view:cardCornerRadius="20dp"
     android:background="#EEEEEE">
 
     <LinearLayout
