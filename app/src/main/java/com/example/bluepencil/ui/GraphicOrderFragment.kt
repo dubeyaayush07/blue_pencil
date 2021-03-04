@@ -15,6 +15,7 @@ import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentGraphicOrderBinding
 import com.example.bluepencil.model.Order
 import com.example.bluepencil.model.Placard
+import com.example.bluepencil.model.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,7 @@ class GraphicOrderFragment : Fragment() {
 
     private lateinit var binding: FragmentGraphicOrderBinding
     private lateinit var placard: Placard
+    private var user: User? = null
 
 
     companion object {
@@ -43,6 +45,16 @@ class GraphicOrderFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView =
             requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
+        val collection = Firebase.firestore.collection("users")
+        val fUser = FirebaseAuth.getInstance().currentUser
+        collection.whereEqualTo("uid", "${fUser?.uid}").get()
+            .addOnSuccessListener { document ->
+                user = if(document.isEmpty) {
+                    null
+                } else {
+                    document.toObjects(User::class.java)[0]
+                }
+            }
         placard = GraphicOrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
         return binding.root
     }
@@ -68,9 +80,25 @@ class GraphicOrderFragment : Fragment() {
                 Snackbar.LENGTH_LONG
             ).show()
             return
-        } else {
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) saveOrder(user.uid)
+        } else if (user == null){
+            Snackbar.make(
+                binding.root,
+                "Unable to fetch user detail",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return
+        } else if (user?.freeCount!! > 0 && placard.free == true){
+            user!!.freeCount = user!!.freeCount?.minus(1)
+            val collection = Firebase.firestore.collection("users")
+            collection.document(user!!.id.toString()).update("freeCount", user!!.freeCount)
+                .addOnSuccessListener {  saveOrder(user!!.uid.toString()) }
+                .addOnFailureListener {
+                    Snackbar.make(
+                        binding.root,
+                        "Unable to fetch user detail",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             return
         }
 
@@ -137,8 +165,7 @@ class GraphicOrderFragment : Fragment() {
             }
             if (status == "success") {
                 //Code to handle successful transaction here.
-                val user = FirebaseAuth.getInstance().currentUser
-                if (user != null) saveOrder(user.uid)
+                saveOrder(user!!.uid.toString())
                 Log.e("UPI", "payment successfull: $approvalRefNo")
             } else if ("Payment cancelled by user." == paymentCancel) {
                 Snackbar.make(binding.root, "Payment cancelled by user.", Snackbar.LENGTH_SHORT)
