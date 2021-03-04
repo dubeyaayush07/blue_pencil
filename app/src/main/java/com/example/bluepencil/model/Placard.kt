@@ -10,6 +10,7 @@ data class Placard (
     var userId: String? = "",
     var url: String? = "",
     var type: String? = "",
+    var free: Boolean? = true,
     var tags: List<String?>? = null
 ): Parcelable {
     constructor(parcel: Parcel) : this(
@@ -18,6 +19,7 @@ data class Placard (
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
         parcel.createStringArrayList()
     ) {
     }
@@ -28,6 +30,7 @@ data class Placard (
         parcel.writeString(userId)
         parcel.writeString(url)
         parcel.writeString(type)
+        parcel.writeValue(free)
         parcel.writeStringList(tags)
     }
 

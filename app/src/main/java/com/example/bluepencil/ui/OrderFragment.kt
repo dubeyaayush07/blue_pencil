@@ -18,12 +18,14 @@ import com.example.bluepencil.R
 import com.example.bluepencil.databinding.FragmentOrderBinding
 import com.example.bluepencil.model.Order
 import com.example.bluepencil.model.Placard
+import com.example.bluepencil.model.User
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import java.io.IOException
 import kotlin.random.Random
@@ -33,9 +35,11 @@ class OrderFragment : Fragment() {
 
     private lateinit var binding: FragmentOrderBinding
     private lateinit var placard: Placard
+    private var user: User? = null
 
     private val IMAGE_GALLERY_REQUEST_CODE: Int = 2001
     private val UPI_PAYMENT: Int = 12345
+
 
     private var url1: String? = null
     private var url2: String? = null
@@ -55,6 +59,16 @@ class OrderFragment : Fragment() {
             requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
         placard = OrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
+        val collection = Firebase.firestore.collection("users")
+        val fUser = FirebaseAuth.getInstance().currentUser
+        collection.whereEqualTo("uid", "${fUser?.uid}").get()
+            .addOnSuccessListener { document ->
+                user = if(document.isEmpty) {
+                    null
+                } else {
+                    document.toObjects(User::class.java)[0]
+                }
+            }
         return binding.root
     }
 
@@ -89,9 +103,25 @@ class OrderFragment : Fragment() {
                 Snackbar.LENGTH_LONG
             ).show()
             return
-        } else {
-            val user = FirebaseAuth.getInstance().currentUser
-            if (user != null) saveOrder(user.uid)
+        } else if (user == null){
+            Snackbar.make(
+                binding.root,
+                "Unable to fetch user detail",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return
+        } else if (user?.freeCount!! > 0 && placard.free == true){
+            user!!.freeCount = user!!.freeCount?.minus(1)
+            val collection = Firebase.firestore.collection("users")
+            collection.document(user!!.id.toString()).update("freeCount", user!!.freeCount)
+                .addOnSuccessListener {  saveOrder(user!!.uid.toString()) }
+                .addOnFailureListener {
+                    Snackbar.make(
+                        binding.root,
+                        "Unable to fetch user detail",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             return
         }
 
@@ -125,8 +155,8 @@ class OrderFragment : Fragment() {
             if (requestCode == IMAGE_GALLERY_REQUEST_CODE) {
                 if (data != null && data.data != null) {
                     val uri = data.data
-                    val user = FirebaseAuth.getInstance().currentUser
-                    if (user != null && uri != null) uploadPhoto(uri, user)
+
+                    if (uri != null) uploadPhoto(uri)
                 }
             } else if (requestCode == UPI_PAYMENT) {
                 if (data != null) {
@@ -171,8 +201,7 @@ class OrderFragment : Fragment() {
             }
             if (status == "success") {
                 //Code to handle successful transaction here.
-                val user = FirebaseAuth.getInstance().currentUser
-                if (user != null) saveOrder(user.uid)
+                saveOrder(user!!.uid.toString())
                 Log.e("UPI", "payment successfull: $approvalRefNo")
             } else if ("Payment cancelled by user." == paymentCancel) {
                 Snackbar.make(binding.root, "Payment cancelled by user.", Snackbar.LENGTH_SHORT)
@@ -196,13 +225,13 @@ class OrderFragment : Fragment() {
         }
     }
 
-    private fun uploadPhoto(uri: Uri, user: FirebaseUser) {
+    private fun uploadPhoto(uri: Uri) {
         Snackbar.make(binding.root, "Uploading...", Snackbar.LENGTH_LONG)
             .show()
 
         val storageReference = FirebaseStorage.getInstance().reference
 
-        val imageRef = storageReference.child("images/" + user.uid + "/" + uri.lastPathSegment)
+        val imageRef = storageReference.child("images/" + user!!.uid.toString() + "/" + uri.lastPathSegment)
         val uploadTask = imageRef.putFile(uri)
         binding.progressBar.visibility = View.VISIBLE
 
