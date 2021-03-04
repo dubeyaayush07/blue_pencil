@@ -63,11 +63,11 @@
                 style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/price"
                 android:textColor="#4f5052"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.977"
+                app:layout_constraintHorizontal_bias="0.98"
                 app:layout_constraintStart_toEndOf="@+id/user_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,6 +78,8 @@
                 android:layout_height="30dp"
                 android:text="Graphic Designer"
                 android:textAlignment="center"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.05"
                 android:textColor="#1877f2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
