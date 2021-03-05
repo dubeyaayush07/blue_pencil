@@ -14,6 +14,7 @@ import com.example.bluepencil.databinding.FragmentHomeBinding
 import com.example.bluepencil.model.User
 import com.google.android.gms.auth.api.credentials.Credentials
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -56,8 +57,16 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.VISIBLE
+        val user = FirebaseAuth.getInstance().currentUser
         adapter = PlacardAdapter(PlacardAdapter.OnClickListener {
-            if (it.type == "photo") {
+            if (it.userId == user?.uid) {
+                Snackbar.make(
+                    binding.root,
+                    "Self Order not Allowed",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            else if (it.type == "photo") {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(it))
             } else {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGraphicOrderFragment(it))
