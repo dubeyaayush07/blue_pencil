@@ -50,6 +50,7 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
         val verify: ImageView = itemView.findViewById(R.id.verify)
         val tag: TextView = itemView.findViewById(R.id.editor_tag)
         val free: TextView = itemView.findViewById(R.id.free)
+        val discount: ImageView = itemView.findViewById(R.id.discount)
 
         fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
@@ -57,7 +58,11 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
             tag.text = if (item.type == "photo") "Photo Editor" else "Graphic Designer"
             if (item!!.free!!) {
                 free.visibility = View.VISIBLE
-            } else free.visibility = View.GONE
+                discount.visibility = View.VISIBLE
+            } else {
+                free.visibility = View.GONE
+                discount.visibility = View.GONE
+            }
 
             orderButton.setOnClickListener {
                 onClickListener.onClick(item)

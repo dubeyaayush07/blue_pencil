@@ -10,27 +10,42 @@
     android:paddingTop="5dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="15dp"
-    app:cardElevation="6dp"
-    app:strokeColor="#EEEEEE"
-    app:strokeWidth="1.5dp">
+    app:cardElevation="6dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="380dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/editor_img"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic" />
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/editor_img"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <ImageView
+                android:id="@+id/discount"
+                android:layout_width="54dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/discount" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
             tools:layout_editor_absoluteX="1dp">
 
             <TextView
@@ -43,31 +58,30 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/verify"
                 android:layout_width="45dp"
                 android:layout_height="39dp"
-                android:layout_marginTop="4dp"
                 android:adjustViewBounds="true"
+                android:paddingTop="15dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/verified"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/user_name"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.459" />
+                app:layout_constraintVertical_bias="0.032" />
 
             <TextView
                 android:id="@+id/price"
                 style="@style/CardTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/price"
                 android:textColor="#4f5052"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/user_name"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,10 +90,10 @@
                 style="@style/CardTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:text="Graphic Designer"
-                android:textAlignment="center"
                 android:fontFamily="sans-serif-light"
                 android:letterSpacing="0.05"
+                android:text="Graphic Designer"
+                android:textAlignment="center"
                 android:textColor="#1877f2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +111,7 @@
                 android:letterSpacing="0.05"
                 android:text="First order free"
                 android:textAlignment="center"
-                android:textColor="#1877f2"
+                android:textColor="#E1BF44"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/price"
@@ -110,8 +124,7 @@
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="8dp">
+            android:layout_marginStart="8dp">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip4"
