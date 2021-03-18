@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.bluepencil.MainFragment"
+        android:name="xyz.bluepencil.bluepencil.MainFragment"
         android:label="Blue Pencil">
         <action
             android:id="@+id/action_mainFragment_to_homeFragment"
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.bluepencil.ui.HomeFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.HomeFragment"
         android:label="Home">
         <action
             android:id="@+id/action_homeFragment_to_mainFragment"
@@ -39,12 +39,12 @@
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
-        android:name="com.example.bluepencil.ui.OrderFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.OrderFragment"
         android:label="Order"
         tools:layout="@layout/fragment_order">
         <argument
             android:name="selectedPlacard"
-            app:argType="com.example.bluepencil.model.Placard" />
+            app:argType="xyz.bluepencil.bluepencil.model.Placard" />
         <action
             android:id="@+id/action_orderFragment_to_inboxFragment"
             app:destination="@id/inboxFragment"
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/inboxFragment"
-        android:name="com.example.bluepencil.ui.InboxFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.InboxFragment"
         android:label="Inbox" >
         <action
             android:id="@+id/action_inboxFragment_to_homeFragment"
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/jobFragment"
-        android:name="com.example.bluepencil.ui.JobFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.JobFragment"
         android:label="@string/jobs"
         tools:layout="@layout/fragment_job" >
         <action
@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/orderCompleteFragment"
-        android:name="com.example.bluepencil.ui.OrderCompleteFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.OrderCompleteFragment"
         android:label="Complete Order">
         <action
             android:id="@+id/action_orderCompleteFragment_to_jobFragment"
@@ -89,11 +89,11 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="selectedOrder"
-            app:argType="com.example.bluepencil.model.Order" />
+            app:argType="xyz.bluepencil.bluepencil.model.Order" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="com.example.bluepencil.ui.InfoFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.InfoFragment"
         android:label="About">
         <action
             android:id="@+id/action_infoFragment_to_homeFragment"
@@ -102,7 +102,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactFragment"
-        android:name="com.example.bluepencil.ui.ContactFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.ContactFragment"
         android:label="Support">
         <action
             android:id="@+id/action_contactFragment_to_homeFragment"
@@ -111,11 +111,11 @@
     </fragment>
     <fragment
         android:id="@+id/graphicOrderFragment"
-        android:name="com.example.bluepencil.ui.GraphicOrderFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.GraphicOrderFragment"
         android:label="Order">
         <argument
             android:name="selectedPlacard"
-            app:argType="com.example.bluepencil.model.Placard" />
+            app:argType="xyz.bluepencil.bluepencil.model.Placard" />
         <action
             android:id="@+id/action_graphicOrderFragment_to_inboxFragment"
             app:destination="@id/inboxFragment"
@@ -124,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/graphicOrderComplete"
-        android:name="com.example.bluepencil.GraphicOrderComplete"
+        android:name="xyz.bluepencil.bluepencil.GraphicOrderComplete"
         android:label="Order Complete"
         tools:layout="@layout/fragment_graphic_order_complete">
         <action
@@ -134,6 +134,6 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="selectedOrder"
-            app:argType="com.example.bluepencil.model.Order" />
+            app:argType="xyz.bluepencil.bluepencil.model.Order" />
     </fragment>
 </navigation>
