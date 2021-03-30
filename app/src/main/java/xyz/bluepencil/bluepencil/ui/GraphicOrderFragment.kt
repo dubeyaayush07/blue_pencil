@@ -196,6 +196,7 @@ class GraphicOrderFragment : Fragment() {
             userId = userId,
             editorId = placard.userId,
             remark = binding.specificationTxt.text.toString(),
+            link = binding.linkTxt.text.toString(),
             type = placard.type,
             editorName = placard.userName
         )

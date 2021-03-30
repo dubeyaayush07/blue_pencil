@@ -102,6 +102,25 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="8dp" >
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/linkChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resources"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="35dp"
+                android:textColor="@color/white"
+                app:chipBackgroundColor="#1877f2" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/complete_order_btn"

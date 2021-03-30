@@ -41,6 +41,7 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
         val orderType: TextView = itemView.findViewById(R.id.order_type)
         val completeOrderBtn: Button = itemView.findViewById(R.id.complete_order_btn)
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
+        val linkChip: Chip = itemView.findViewById(R.id.linkChip)
 
         fun bind(item: Order, onClickListener: OnClickListener) {
             date.text = formatDate(item.date)
@@ -61,6 +62,17 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
                         }
                     } else {
                         v.visibility = View.GONE
+                    }
+                }
+            }
+
+            if (item.link.isNullOrBlank()) {
+                linkChip.visibility = View.GONE
+            } else {
+                linkChip.visibility = View.VISIBLE
+                linkChip.setOnClickListener {
+                    Intent(Intent.ACTION_VIEW, Uri.parse(item.link)).apply {
+                        it.context.startActivity(this)
                     }
                 }
             }
