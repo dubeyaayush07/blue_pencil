@@ -43,7 +43,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:hint="Paste link of resources here">
+            android:hint="Paste drive link of extra resources here">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

@@ -10,18 +10,32 @@
         tools:context=".ui.InboxFragment">
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/empty_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Outstanding and completed orders appear here"
+            android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:id="@+id/empty_txt"
-            android:visibility="gone"
-            android:textSize="14sp"
+            android:text="Outstanding and completed orders appear here"
+            android:textSize="15sp"
             android:textStyle="bold"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/empty_txt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/order_list"
+            app:layout_constraintVertical_bias="0.967"
+            app:srcCompat="@drawable/inbox11" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/order_list"
@@ -30,8 +44,10 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
