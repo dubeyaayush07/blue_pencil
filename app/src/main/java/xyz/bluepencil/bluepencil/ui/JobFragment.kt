@@ -80,6 +80,7 @@ class JobFragment : Fragment() {
                 adapter.data = result.toObjects(Order::class.java)
                 if (adapter.itemCount == 0) {
                     binding.contactTxt.visibility = View.VISIBLE
+                    binding.imageView9.visibility = View.VISIBLE
                 }
             }
             .addOnFailureListener { exception ->
