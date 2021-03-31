@@ -5,9 +5,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="16dp"
+        android:paddingTop="0dp"
         android:background="#f0f2f5"
         tools:context=".ui.JobFragment">
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/order_list"
+            app:srcCompat="@drawable/ic_navbar1" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/contact_txt"
@@ -46,6 +55,8 @@
             app:layout_constraintTop_toTopOf="@+id/order_list"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/job11" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

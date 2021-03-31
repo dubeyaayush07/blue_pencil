@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/editor_img"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +45,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="63dp"
             tools:layout_editor_absoluteX="1dp">
 
             <TextView
@@ -89,7 +89,7 @@
                 android:id="@+id/editor_tag"
                 style="@style/CardTextView2"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:letterSpacing="0.05"
                 android:text="Graphic Designer"
@@ -100,13 +100,13 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_name"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/free"
                 style="@style/CardTextView2"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:letterSpacing="0.05"
                 android:text="First order free"
@@ -123,32 +123,35 @@
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp">
+            android:layout_height="43dp"
+            android:layout_marginStart="10dp">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip4"
                 android:layout_width="wrap_content"
+                android:textColor="#4f5052"
+                android:fontFamily="sans-serif-light"
                 android:layout_height="wrap_content"
                 android:text="Beautify"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2" />
+                app:chipBackgroundColor="#f0f2f5" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip2"
+                android:textColor="#4f5052"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DeAgify"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2" />
+                app:chipBackgroundColor="#f0f2f5"  />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip3"
+                android:textColor="#4f5052"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Repair"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="#1877f2" />
+                app:chipBackgroundColor="#f0f2f5"  />
 
         </com.google.android.material.chip.ChipGroup>
 

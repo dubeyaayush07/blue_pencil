@@ -5,9 +5,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="16dp"
+        android:paddingTop="0dp"
         android:background="#f0f2f5"
         tools:context=".ui.InboxFragment">
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/order_list"
+            app:srcCompat="@drawable/ic_navbar2" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/empty_txt"
@@ -48,6 +58,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

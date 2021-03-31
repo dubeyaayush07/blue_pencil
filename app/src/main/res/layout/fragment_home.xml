@@ -8,6 +8,14 @@
         android:background="#f0f2f5"
         tools:context=".ui.HomeFragment">
 
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_navbae3" />
 
 
         <com.github.ybq.android.spinkit.SpinKitView
@@ -25,13 +33,16 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/placard_list"
             android:layout_width="0dp"
-            android:padding="10dp"
             android:layout_height="0dp"
+            android:padding="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
