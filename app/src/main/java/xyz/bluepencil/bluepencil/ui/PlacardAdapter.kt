@@ -1,5 +1,7 @@
 package xyz.bluepencil.bluepencil.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +53,11 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
 
         fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
+            userName.setOnClickListener {
+                Intent(Intent.ACTION_VIEW, Uri.parse(item.portfolio)).apply {
+                    it.context.startActivity(this)
+                }
+            }
             price.text = getCurrencyString(item.cost)
             tag.text = if (item.type == "photo") "Photo Editor" else "Graphic Designer"
             if (item!!.free!!) {
