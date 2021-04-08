@@ -9,5 +9,6 @@ data class User(
     var uid: String? = "",
     var name: String? = "",
     var token: String? = "",
-    var freeCount: Int? = 1
+    var freeCount: Int? = 1,
+    var email: String? = "",
 )
