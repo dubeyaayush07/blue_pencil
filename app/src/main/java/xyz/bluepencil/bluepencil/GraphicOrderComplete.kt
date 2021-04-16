@@ -50,12 +50,29 @@ class GraphicOrderComplete : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isOnline()) {
-            launchUpload()
+            if (order.count == 1) {
+                launchUpload()
+            } else {
+                binding.uploadTxt.text = "Order Count ${order.count}"
+                binding.jobUrlTxt.visibility = View.VISIBLE
+                binding.submitBtn.visibility = View.VISIBLE
+
+            }
+
         } else {
             Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
                 .show()
             findNavController().navigate(GraphicOrderCompleteDirections.actionGraphicOrderCompleteToJobFragment())
 
+        }
+
+        binding.submitBtn.setOnClickListener {
+            if (binding.jobUrlTxt.text.isNullOrBlank()) {
+                Snackbar.make(binding.root, "Job Url Required", Snackbar.LENGTH_LONG)
+                    .show()
+            } else {
+                saveOrder(binding.jobUrlTxt.text.toString())
+            }
         }
     }
 

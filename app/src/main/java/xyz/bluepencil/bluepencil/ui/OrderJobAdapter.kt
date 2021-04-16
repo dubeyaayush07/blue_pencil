@@ -49,11 +49,13 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
         val linkChip: Chip = itemView.findViewById(R.id.linkChip)
         val contact: Chip = itemView.findViewById(R.id.contact)
+        val count: Chip = itemView.findViewById(R.id.orderCount)
 
 
         fun bind(item: Order, onClickListener: OnClickListener, ref: CollectionReference) {
             date.text = formatDate(item.date)
             orderRemark.text = item.remark
+            count.text = item.count.toString()
             orderType.text = if (item.type == "photo") "Photo" else "Graphic"
 
             contact.setOnClickListener { view->

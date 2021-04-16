@@ -13,6 +13,7 @@ data class Order (
     var photoUrls: List<String?>?= null,
     var jobUrls: List<String?>?= null,
     var complete: Boolean? = false,
+    var count: Int? = 1,
     var remark: String? = "Beautify",
     var link: String? = "",
     var type: String? = "",
@@ -26,6 +27,7 @@ data class Order (
         parcel.createStringArrayList(),
         parcel.createStringArrayList(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -41,6 +43,7 @@ data class Order (
         parcel.writeStringList(photoUrls)
         parcel.writeStringList(jobUrls)
         parcel.writeValue(complete)
+        parcel.writeValue(count)
         parcel.writeString(remark)
         parcel.writeString(link)
         parcel.writeString(type)
