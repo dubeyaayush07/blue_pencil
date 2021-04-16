@@ -76,7 +76,18 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
             } else {
                 orderStatus.text ="Completed"
                 chipGroup.visibility = View.VISIBLE
-                configureChips(item)
+                if (item.count == 1) {
+                    configureChips(item)
+                } else {
+                    val v = chipGroup.getChildAt(0) as Chip
+                    v.text = "Graphics"
+                    v.visibility = View.VISIBLE
+                    v.setOnClickListener {
+                        Intent(Intent.ACTION_VIEW, Uri.parse(item.jobUrls?.get(0))).apply {
+                            v.context.startActivity(this)
+                        }
+                    }
+                }
 
             }
 

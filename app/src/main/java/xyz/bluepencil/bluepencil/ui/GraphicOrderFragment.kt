@@ -73,7 +73,8 @@ class GraphicOrderFragment : Fragment() {
     }
 
     private fun payUsingUpi() {
-        if (binding.specificationTxt.text.isNullOrBlank()) {
+        if (checkOrderCount()) return
+        else if (binding.specificationTxt.text.isNullOrBlank()) {
             Snackbar.make(
                 binding.root,
                 "Order Specification required",
@@ -117,6 +118,26 @@ class GraphicOrderFragment : Fragment() {
         val chooser = Intent.createChooser(upiPayIntent, "Pay with")
         startActivityForResult(chooser, UPI_PAYMENT)
 
+    }
+
+    private fun checkOrderCount(): Boolean {
+        if (binding.orderCount.text.isNullOrBlank()) {
+            Snackbar.make(
+                binding.root,
+                "Order Count required",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return true
+        } else if (binding.orderCount.text.toString().toInt() <= 0
+            || binding.orderCount.text.toString().toInt() > 100) {
+            Snackbar.make(
+                binding.root,
+                "Order Count should be between 1 and 100",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return true
+        }
+        return false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -195,6 +216,7 @@ class GraphicOrderFragment : Fragment() {
         val order = Order(
             userId = userId,
             editorId = placard.userId,
+            count = binding.orderCount.text.toString().toInt(),
             remark = binding.specificationTxt.text.toString(),
             link = binding.linkTxt.text.toString(),
             type = placard.type,
