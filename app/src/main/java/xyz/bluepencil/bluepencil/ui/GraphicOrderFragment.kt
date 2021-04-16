@@ -104,7 +104,7 @@ class GraphicOrderFragment : Fragment() {
         }
 
 
-        val amount = placard.cost
+        val amount = placard.cost * binding.orderCount.text.toString().toInt()
 
         val uri = Uri.parse("upi://pay").buildUpon()
             .appendQueryParameter("pa", "9131455619@okbizaxis")
