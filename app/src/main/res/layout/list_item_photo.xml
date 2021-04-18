@@ -4,12 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/photo"
+    <soup.neumorphism.NeumorphCardView
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:padding="2dp"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        android:layout_height="wrap_content"
+        app:neumorph_shadowColorLight="#ffffff"
+        app:neumorph_shadowColorDark="#b6b8ba"
+        >
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/backgrounds/scenic"/>
+    </soup.neumorphism.NeumorphCardView>
+
 </layout>

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "xyz.bluepencil.bluepencil"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 5
         versionName "5.0"
@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.github.fornewid:neumorphism:0.3.0'
     def nav_version = "2.3.2"
     def lifecycle_version = "2.2.0"
     def multidex_version = "2.0.1"
