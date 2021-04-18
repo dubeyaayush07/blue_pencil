@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_homeFragment_to_graphicOrderFragment"
             app:destination="@id/graphicOrderFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderFragment"
@@ -135,5 +138,14 @@
         <argument
             android:name="selectedOrder"
             app:argType="xyz.bluepencil.bluepencil.model.Order" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="xyz.bluepencil.bluepencil.ui.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+        <argument
+            android:name="selectedPlacard"
+            app:argType="xyz.bluepencil.bluepencil.model.Placard" />
     </fragment>
 </navigation>

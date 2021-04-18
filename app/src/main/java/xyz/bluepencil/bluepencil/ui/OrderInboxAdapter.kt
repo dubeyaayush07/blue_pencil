@@ -2,6 +2,7 @@ package xyz.bluepencil.bluepencil.ui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import xyz.bluepencil.bluepencil.R
 import xyz.bluepencil.bluepencil.formatDate
 import xyz.bluepencil.bluepencil.model.Order
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-import com.google.firebase.storage.FirebaseStorage
+import xyz.bluepencil.bluepencil.model.User
 import java.io.File
 
 
@@ -27,7 +32,7 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-
+    var userCollection = Firebase.firestore.collection("users")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -35,7 +40,7 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item, userCollection)
     }
 
     override fun getItemCount(): Int = data.size
@@ -47,11 +52,23 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
         val editorNameTxt: TextView = itemView.findViewById(R.id.artist_name)
         val orderTypeTxt: TextView = itemView.findViewById(R.id.order_type)
+        val contact: Chip = itemView.findViewById(R.id.contact)
 
-        fun bind(item: Order) {
+        fun bind(item: Order, ref: CollectionReference) {
             date.text = formatDate(item.date)
             editorNameTxt.text = item.editorName
             orderTypeTxt.text = if (item.type == "photo") "Photo" else "Graphic"
+
+            contact.setOnClickListener { view->
+                ref.whereEqualTo("uid", item.editorId).get()
+                    .addOnSuccessListener {
+                        val email = it.documents[0].toObject(User::class.java)?.email
+                        sendEmail(email.toString(), item.id.toString(), view.context)
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(view.context, "Unable to fetch patient", Toast.LENGTH_SHORT).show()
+                    }
+            }
 
             if (item.complete == false) {
                 orderStatus.text = "Pending"
@@ -59,7 +76,18 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
             } else {
                 orderStatus.text ="Completed"
                 chipGroup.visibility = View.VISIBLE
-                configureChips(item)
+                if (item.count == 1) {
+                    configureChips(item)
+                } else {
+                    val v = chipGroup.getChildAt(0) as Chip
+                    v.text = "Graphics"
+                    v.visibility = View.VISIBLE
+                    v.setOnClickListener {
+                        Intent(Intent.ACTION_VIEW, Uri.parse(item.jobUrls?.get(0))).apply {
+                            v.context.startActivity(this)
+                        }
+                    }
+                }
 
             }
 
@@ -106,16 +134,29 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
             }
 
 
-
         }
 
         private fun openImage(context: Context, file: File) {
             val intent = Intent()
             intent.action = Intent.ACTION_VIEW
-            val uri = FileProvider.getUriForFile(context, context.applicationContext.packageName + ".provider", file)
+            val uri = FileProvider.getUriForFile(
+                context,
+                context.applicationContext.packageName + ".provider",
+                file
+            )
             intent.setDataAndType(uri, "image/*")
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             context.startActivity(intent)
+        }
+
+        private fun sendEmail(recipient: String, subject: String, context: Context) {
+
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:")
+            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Order reference number $subject")
+            context.startActivity(Intent.createChooser(intent, "Choose Email Client"))
+
         }
 
         companion object {

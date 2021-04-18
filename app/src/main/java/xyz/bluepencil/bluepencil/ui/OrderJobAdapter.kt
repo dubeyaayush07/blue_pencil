@@ -1,5 +1,6 @@
 package xyz.bluepencil.bluepencil.ui
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -7,12 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import xyz.bluepencil.bluepencil.model.Order
 import xyz.bluepencil.bluepencil.R
 import xyz.bluepencil.bluepencil.formatDate
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import xyz.bluepencil.bluepencil.model.User
 
 class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerView.Adapter<OrderJobAdapter.ViewHolder>() {
 
@@ -21,7 +27,7 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
             field = value
             notifyDataSetChanged()
         }
-
+    var userCollection = Firebase.firestore.collection("users")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
@@ -29,7 +35,7 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item, onClickListener)
+        holder.bind(item, onClickListener, userCollection)
     }
 
 
@@ -42,11 +48,28 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
         val completeOrderBtn: Button = itemView.findViewById(R.id.complete_order_btn)
         val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
         val linkChip: Chip = itemView.findViewById(R.id.linkChip)
+        val contact: Chip = itemView.findViewById(R.id.contact)
+        val count: Chip = itemView.findViewById(R.id.orderCount)
 
-        fun bind(item: Order, onClickListener: OnClickListener) {
+
+        fun bind(item: Order, onClickListener: OnClickListener, ref: CollectionReference) {
             date.text = formatDate(item.date)
             orderRemark.text = item.remark
+            count.text = item.count.toString()
             orderType.text = if (item.type == "photo") "Photo" else "Graphic"
+
+            contact.setOnClickListener { view->
+                ref.whereEqualTo("uid", item.userId).get()
+                    .addOnSuccessListener {
+                        val email = it.documents[0].toObject(User::class.java)?.email
+                        sendEmail(email.toString(), item.id.toString(), view.context)
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(view.context, "Operation Failed", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+
 
             val size = item.photoUrls?.size ?: 0
 
@@ -80,6 +103,16 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
             completeOrderBtn.setOnClickListener {
                 onClickListener.onClick(item)
             }
+
+        }
+
+        private fun sendEmail(recipient: String, subject: String, context: Context) {
+
+            val intent = Intent(Intent.ACTION_SENDTO)
+            intent.data = Uri.parse("mailto:")
+            intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Order reference number $subject")
+            context.startActivity(Intent.createChooser(intent, "Choose Email Client"))
 
         }
 

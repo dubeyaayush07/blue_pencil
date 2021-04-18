@@ -112,7 +112,8 @@ class MainFragment : Fragment() {
                             val newUser = User(
                                 uid = user?.uid,
                                 name = user?.displayName,
-                                token = it
+                                token = it,
+                                email =  user?.email
                             )
                             collection.add(newUser)
                         }
