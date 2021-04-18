@@ -1,11 +1,12 @@
 package xyz.bluepencil.bluepencil.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import xyz.bluepencil.bluepencil.R
 import xyz.bluepencil.bluepencil.databinding.FragmentProfileBinding
@@ -33,9 +34,20 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.name.text = placard.userName
         binding.description.text = placard.description
+        binding.tag.text = if (placard.type == "photo") "Photo Editor" else "Graphic Designer"
         val adapter = ProfileAdapter()
         binding.photoList.adapter = adapter
         adapter.data = placard.photoList as List<String>
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
 
 
