@@ -55,18 +55,22 @@ class HomeFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.VISIBLE
         val user = FirebaseAuth.getInstance().currentUser
-        adapter = PlacardAdapter(PlacardAdapter.OnClickListener {
-            if (it.userId == user?.uid) {
-                Snackbar.make(
-                    binding.root,
-                    "Self Order not Allowed",
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-            else if (it.type == "photo") {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(it))
+        adapter = PlacardAdapter(PlacardAdapter.OnClickListener { placard, isProfile ->
+            if (!isProfile) {
+                if (placard.userId == user?.uid) {
+                    Snackbar.make(
+                        binding.root,
+                        "Self Order not Allowed",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                else if (placard.type == "photo") {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(placard))
+                } else {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGraphicOrderFragment(placard))
+                }
             } else {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGraphicOrderFragment(it))
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment(placard))
             }
         })
 
