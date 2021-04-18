@@ -54,9 +54,7 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
         fun bind(item: Placard, onClickListener: OnClickListener) {
             userName.text = item.userName
             userName.setOnClickListener {
-                Intent(Intent.ACTION_VIEW, Uri.parse(item.portfolio)).apply {
-                    it.context.startActivity(this)
-                }
+                onClickListener.onClick(item, true)
             }
             price.text = getCurrencyString(item.cost)
             tag.text = if (item.type == "photo") "Photo Editor" else "Graphic Designer"
@@ -69,7 +67,7 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
             }
 
             orderButton.setOnClickListener {
-                onClickListener.onClick(item)
+                onClickListener.onClick(item, false)
             }
 
             item.url?.let {
@@ -111,9 +109,8 @@ class PlacardAdapter(private val onClickListener: OnClickListener): RecyclerView
         }
     }
 
-    class OnClickListener(val clickListener: (placard: Placard) -> Unit) {
-        fun onClick(placard: Placard) = clickListener(placard)
+    class OnClickListener(val clickListener: (placard: Placard, isProfile: Boolean) -> Unit) {
+        fun onClick(placard: Placard, isProfile: Boolean) = clickListener(placard, isProfile)
     }
-
 
 }

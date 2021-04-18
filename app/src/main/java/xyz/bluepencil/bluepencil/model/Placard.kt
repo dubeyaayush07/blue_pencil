@@ -12,8 +12,10 @@ data class Placard (
     var type: String? = "",
     var portfolio: String? = "",
     var free: Boolean? = true,
-    var tags: List<String?>? = null
-): Parcelable {
+    var tags: List<String?>? = null,
+    var photoList: List<String?>? = null,
+    var description: String? = "",
+):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
@@ -22,7 +24,9 @@ data class Placard (
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Boolean::class.java.classLoader) as? Boolean,
-        parcel.createStringArrayList()
+        parcel.createStringArrayList(),
+        parcel.createStringArrayList(),
+        parcel.readString()
     ) {
     }
 
@@ -35,6 +39,8 @@ data class Placard (
         parcel.writeString(portfolio)
         parcel.writeValue(free)
         parcel.writeStringList(tags)
+        parcel.writeStringList(photoList)
+        parcel.writeString(description)
     }
 
     override fun describeContents(): Int {
