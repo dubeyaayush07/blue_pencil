@@ -38,6 +38,13 @@ class ProfileFragment : Fragment() {
         val adapter = ProfileAdapter()
         binding.photoList.adapter = adapter
         adapter.data = placard.photoList as List<String>
+        setupTags()
+    }
+
+    private fun setupTags() {
+        binding.tag1.text = placard.tags!![0]
+        binding.tag2.text = placard.tags!![1]
+        binding.tag3.text = placard.tags!![2]
     }
 
     override fun onResume() {
