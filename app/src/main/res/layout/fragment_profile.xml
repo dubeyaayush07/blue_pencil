@@ -49,6 +49,80 @@
             android:paddingBottom="15dp"
             android:id="@+id/description" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <soup.neumorphism.NeumorphCardView
+                android:id="@+id/neumorphCardView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/neumorphCardView"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowColorLight="#f9f9f9"
+                >
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:id="@+id/tag1"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:padding="7dp"
+                    android:text="UI/UX"
+                    android:textSize="15dp"
+                    />
+            </soup.neumorphism.NeumorphCardView>
+
+            <soup.neumorphism.NeumorphCardView
+                android:id="@+id/neumorphCardView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/neumorphCardView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowColorLight="#f9f9f9"
+                >
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:id="@+id/tag3"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:padding="7dp"
+                    android:text="Logo"
+                    android:textSize="15dp"
+                    />
+            </soup.neumorphism.NeumorphCardView>
+
+            <soup.neumorphism.NeumorphCardView
+                android:id="@+id/neumorphCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/neumorphCardView3"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/neumorphCardView2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:neumorph_shadowColorLight="#f9f9f9"
+                >
+
+                <TextView
+                    android:id="@+id/tag2"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:padding="7dp"
+                    android:text="Print Media"
+                    android:textSize="15dp"
+                    />
+            </soup.neumorphism.NeumorphCardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/photo_list"
