@@ -61,6 +61,9 @@ class GraphicOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapter = WorkAdapter()
+        adapter.data = listOf("Logo", "Simple Poster", "Complex Poster")
+        binding.workList.adapter = adapter
         binding.orderBtn.setOnClickListener {
             if (isOnline()) {
                 payUsingUpi()
