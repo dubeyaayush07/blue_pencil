@@ -70,18 +70,6 @@
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/work_list"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:clipToPadding="false"
-            android:layout_marginHorizontal="18dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="2" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/order_btn"
             android:layout_marginTop="16dp"
