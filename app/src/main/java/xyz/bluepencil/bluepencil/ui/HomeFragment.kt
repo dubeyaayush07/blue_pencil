@@ -1,5 +1,7 @@
 package xyz.bluepencil.bluepencil.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -113,6 +115,12 @@ class HomeFragment : Fragment() {
 
             R.id.contact -> {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToContactFragment())
+            }
+
+            R.id.more_info -> {
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://bluepencil.xyz/")).apply {
+                    startActivity(this)
+                }
             }
 
 

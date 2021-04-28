@@ -7,6 +7,10 @@
         android:title="@string/sign_out" />
 
     <item
+        android:id="@+id/more_info"
+        android:title="@string/more_info" />
+
+    <item
         android:id="@+id/info"
         android:icon="@drawable/ic_info"
         android:title="Info"
