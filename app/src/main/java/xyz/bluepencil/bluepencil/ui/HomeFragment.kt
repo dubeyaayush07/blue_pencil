@@ -117,8 +117,26 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToContactFragment())
             }
 
-            R.id.more_info -> {
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://bluepencil.xyz/")).apply {
+            R.id.privacy -> {
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://bluepencil.xyz/#privacy")).apply {
+                    startActivity(this)
+                }
+            }
+
+            R.id.terms -> {
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://bluepencil.xyz/#terms")).apply {
+                    startActivity(this)
+                }
+            }
+
+            R.id.refund -> {
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://bluepencil.xyz/#refund")).apply {
+                    startActivity(this)
+                }
+            }
+
+            R.id.pricing -> {
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://bluepencil.xyz/#pricing")).apply {
                     startActivity(this)
                 }
             }

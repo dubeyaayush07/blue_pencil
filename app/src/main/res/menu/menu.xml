@@ -7,8 +7,19 @@
         android:title="@string/sign_out" />
 
     <item
-        android:id="@+id/more_info"
-        android:title="@string/more_info" />
+        android:id="@+id/privacy"
+        android:title="Privacy Policy" />
+    <item
+        android:id="@+id/terms"
+        android:title="Terms and Conditions" />
+
+    <item
+        android:id="@+id/pricing"
+        android:title="Pricing Policy" />
+
+    <item
+        android:id="@+id/refund"
+        android:title="Refund Policy" />
 
     <item
         android:id="@+id/info"
