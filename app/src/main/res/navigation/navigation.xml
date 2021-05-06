@@ -120,10 +120,9 @@
             android:name="selectedPlacard"
             app:argType="xyz.bluepencil.bluepencil.model.Placard" />
         <action
-            android:id="@+id/action_graphicOrderFragment_to_inboxFragment"
-            app:destination="@id/inboxFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_graphicOrderFragment_to_paymentActivity"
+            app:destination="@id/paymentActivity"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/graphicOrderComplete"
@@ -148,4 +147,16 @@
             android:name="selectedPlacard"
             app:argType="xyz.bluepencil.bluepencil.model.Placard" />
     </fragment>
+    <activity
+        android:id="@+id/paymentActivity"
+        android:name="xyz.bluepencil.bluepencil.PaymentActivity"
+        android:label="Payment"
+        tools:layout="@layout/activity_payment" >
+        <argument
+            android:name="selectedOrder"
+            app:argType="xyz.bluepencil.bluepencil.model.Order" />
+        <argument
+            android:name="cost"
+            app:argType="integer" />
+    </activity>
 </navigation>
