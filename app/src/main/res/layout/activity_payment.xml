@@ -8,6 +8,21 @@
         android:layout_height="match_parent"
         tools:context=".PaymentActivity">
 
+        <ProgressBar
+            android:id="@+id/loading_bar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="100dp"
+            android:elevation="7dp"
+            app:SpinKit_Color="#1877f2"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
