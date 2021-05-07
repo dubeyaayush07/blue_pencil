@@ -3,10 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".PaymentActivity">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            tools:context=".PaymentActivity">
+
 
         <ProgressBar
             android:id="@+id/loading_bar"
@@ -22,107 +24,160 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="10dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:layout_marginBottom="5dp"
-                android:text="Order Summary" />
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="16dp"
+                android:backgroundTint="@color/white"
+                android:elevation="5dp"
+                android:padding="5dp"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:layout_editor_absoluteX="12dp"
+                    tools:layout_editor_absoluteY="167dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#283593"
+                        android:paddingBottom="10dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/CardTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#283593"
+                            android:gravity="center"
+                            android:paddingBottom="0dp"
+                            android:text="Order Summary"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Desginer Name" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="68dp"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="12dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/cost"
+                            style="@style/CardTextView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="44dp"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            style="@style/CardTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:letterSpacing="0.1"
+                            android:text="Artist Name"
+                            android:textColor="#4f5052"
+                            android:textSize="15dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textView13"
+                            style="@style/CardTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-light"
+                            android:letterSpacing="0.1"
+                            android:text="Ammount Payable"
+                            android:textColor="#4f5052"
+                            android:textSize="15dp"
+                            app:layout_constraintBottom_toTopOf="@+id/cost"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/name"
+                            style="@style/CardTextView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Mayur Tantwar"
+                            android:textSize="15sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/name"
-                android:text="Mayur Tantwar"
-                android:textSize="15sp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/CardTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Job Description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/specification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="lorem ipsum and graphic design logo creation for tmy company"
+                        android:textSize="15sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/pay_other"
+                        style="@style/btn_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:text="Other Payment Options"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pay"
+                        app:rippleColor="@color/white" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/pay"
+                        style="@style/btn_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="18dp"
+                        android:text="Pay using Paytm/PhonePe"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:rippleColor="@color/white" />
 
 
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Amount Payable" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/cost"
-                android:text="0"
-                android:textSize="15sp" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Specification" />
-
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/CardTextView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"
-                android:id="@+id/specification"
-                android:text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. "
-                android:textSize="15sp" />
-
-
-        </LinearLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pay_other"
-            style="@style/btn_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="18dp"
-            android:text="Other Payment Options"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pay"
-            app:rippleColor="@color/white" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/pay"
-            style="@style/btn_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="18dp"
-            android:text="Pay using Paytm/PhonePe"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:rippleColor="@color/white" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
