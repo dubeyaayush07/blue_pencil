@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -62,7 +63,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
     private fun payUsingUpi(amount: Int) {
         val uri = Uri.parse("upi://pay").buildUpon()
             .appendQueryParameter("pa", "9131455619@okbizaxis")
-            .appendQueryParameter("pn", "Gagan Patel")
+            .appendQueryParameter("pn", "Blue Pencil")
             .appendQueryParameter("tn", "Order Payment")
             .appendQueryParameter("am", "$amount")
             .appendQueryParameter("cu", "INR")
@@ -176,7 +177,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
 
     override fun onPaymentSuccess(razorpayPaymentID: String) {
         try {
-            Toast.makeText(this, "Payment Successful: $razorpayPaymentID", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT)
                 .show()
             saveOrder()
         } catch (e: Exception) {
@@ -202,20 +203,23 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
 
     override fun onPaymentError(code: Int, response: String) {
         try {
-            Toast.makeText(this, "Payment failed: $code $response", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Log.e(TAG, "Exception in onPaymentError", e)
         }
     }
 
     private fun getOrderId(amount: Int) {
+
+        binding.loadingBar.visibility = View.VISIBLE
         OrderApi.retrofitService.getOrderID("$amount").enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
+                binding.loadingBar.visibility = View.GONE
                 Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                Toast.makeText(applicationContext, response.body(), Toast.LENGTH_SHORT).show()
+                binding.loadingBar.visibility = View.GONE
                 startPayment(response.body().toString(), amount)
             }
         })
