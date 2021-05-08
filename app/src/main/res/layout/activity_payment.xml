@@ -78,7 +78,9 @@
                             style="@style/CardTextView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="44dp"
+                            android:layout_marginEnd="52dp"
+                            android:layout_marginBottom="4dp"
+                            android:textColor="#283593"
                             android:gravity="center"
                             android:text="0"
                             android:textSize="15sp"
@@ -110,13 +112,15 @@
                             android:textSize="15dp"
                             app:layout_constraintBottom_toTopOf="@+id/cost"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/name"
                             style="@style/CardTextView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="#283593"
                             android:gravity="center"
                             android:text="Mayur Tantwar"
                             android:textSize="15sp"
@@ -137,6 +141,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Job Description"
+                            android:layout_marginBottom="5dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -148,32 +153,71 @@
                         android:id="@+id/specification"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:gravity="center_horizontal"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp"
                         android:text="lorem ipsum and graphic design logo creation for tmy company"
                         android:textSize="15sp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/pay_other"
-                        style="@style/btn_style"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="18dp"
-                        android:text="Other Payment Options"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/pay"
-                        app:rippleColor="@color/white" />
+                        android:layout_marginBottom="8dp">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/pay"
-                        style="@style/btn_style"
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pay"
+                            style="@style/btn_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="18dp"
+                            android:text="Pay using Paytm/PhonePe"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:rippleColor="@color/white" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="18dp"
-                        android:text="Pay using Paytm/PhonePe"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:rippleColor="@color/white" />
+                        android:layout_height="80dp">
+
+                        <TextView
+                            android:id="@+id/textView16"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:text="For Google Pay, Cards and other payment options"
+                            android:textAlignment="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pay_other"
+                            style="@style/btn_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="18dp"
+                            android:backgroundTint="#283593"
+                            android:text="Razorpay"
+                            app:layout_constraintBottom_toTopOf="@+id/textView16"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:rippleColor="@color/white" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
 
                 </LinearLayout>
