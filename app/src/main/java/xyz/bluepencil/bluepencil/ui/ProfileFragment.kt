@@ -26,7 +26,7 @@ class ProfileFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView =
             requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.GONE
-        placard = OrderFragmentArgs.fromBundle(requireArguments()).selectedPlacard
+        placard = ProfileFragmentArgs.fromBundle(requireArguments()).selectedPlacard
         return binding.root
     }
 

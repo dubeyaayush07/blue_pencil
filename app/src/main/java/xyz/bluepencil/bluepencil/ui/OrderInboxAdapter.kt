@@ -48,16 +48,17 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val orderStatus: TextView = itemView.findViewById(R.id.order_status)
         val date: TextView = itemView.findViewById(R.id.date)
-        val progress: ProgressBar = itemView.findViewById(R.id.progress_bar)
-        val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
         val editorNameTxt: TextView = itemView.findViewById(R.id.artist_name)
         val orderTypeTxt: TextView = itemView.findViewById(R.id.order_type)
         val contact: Chip = itemView.findViewById(R.id.contact)
+        val complete: Chip = itemView.findViewById(R.id.jobUrls)
+        val count: Chip = itemView.findViewById(R.id.count)
 
         fun bind(item: Order, ref: CollectionReference) {
             date.text = formatDate(item.date)
             editorNameTxt.text = item.editorName
-            orderTypeTxt.text = if (item.type == "photo") "Photo" else "Graphic"
+            orderTypeTxt.text = "Graphic"
+            count.text = item.count.toString()
 
             contact.setOnClickListener { view->
                 ref.whereEqualTo("uid", item.editorId).get()
@@ -72,81 +73,17 @@ class OrderInboxAdapter: RecyclerView.Adapter<OrderInboxAdapter.ViewHolder>() {
 
             if (item.complete == false) {
                 orderStatus.text = "Pending"
-                chipGroup.visibility = View.GONE
+                complete.visibility = View.GONE
             } else {
                 orderStatus.text ="Completed"
-                chipGroup.visibility = View.VISIBLE
-                if (item.count == 1) {
-                    configureChips(item)
-                } else {
-                    val v = chipGroup.getChildAt(0) as Chip
-                    v.text = "Graphics"
-                    v.visibility = View.VISIBLE
-                    v.setOnClickListener {
-                        Intent(Intent.ACTION_VIEW, Uri.parse(item.jobUrls?.get(0))).apply {
-                            v.context.startActivity(this)
-                        }
-                    }
-                }
-
-            }
-
-        }
-
-        private fun configureChips(order: Order) {
-            val size = order.jobUrls?.size ?: 0
-            for (i in 0..2) {
-                val v: View = chipGroup.getChildAt(i)
-                if (v is Chip) {
-                    if (i < size) {
-                        v.visibility = View.VISIBLE
-                        v.setOnClickListener {
-                            downloadAndOpenImage(it.context, order.jobUrls?.get(i) ?: "")
-                        }
-                    } else {
-                        v.visibility = View.GONE
+                complete.visibility = View.VISIBLE
+                complete.setOnClickListener {
+                    Intent(Intent.ACTION_VIEW, Uri.parse(item.jobUrls?.get(0))).apply {
+                        it.context.startActivity(this)
                     }
                 }
             }
-        }
 
-        private fun downloadAndOpenImage(context: Context, url: String) {
-            val ref = FirebaseStorage.getInstance().getReferenceFromUrl(url)
-            val localFile = File(context.getExternalFilesDir(null)?.absolutePath.toString() + ref.name)
-
-            progress.visibility = View.VISIBLE
-
-            if (localFile.exists()) {
-                openImage(context, localFile)
-                progress.visibility = View.GONE
-            }
-            else {
-                ref.getFile(localFile).addOnSuccessListener {
-                    openImage(context, localFile)
-                    progress.visibility = View.GONE
-                }.addOnProgressListener {
-                    val prog = (100.0 * it.bytesTransferred) / it.totalByteCount
-                    progress.progress = prog.toInt()
-                }.addOnFailureListener {
-                    progress.visibility = View.GONE
-                    Toast.makeText(context, "Download Failed", Toast.LENGTH_LONG).show()
-                }
-            }
-
-
-        }
-
-        private fun openImage(context: Context, file: File) {
-            val intent = Intent()
-            intent.action = Intent.ACTION_VIEW
-            val uri = FileProvider.getUriForFile(
-                context,
-                context.applicationContext.packageName + ".provider",
-                file
-            )
-            intent.setDataAndType(uri, "image/*")
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            context.startActivity(intent)
         }
 
         private fun sendEmail(recipient: String, subject: String, context: Context) {

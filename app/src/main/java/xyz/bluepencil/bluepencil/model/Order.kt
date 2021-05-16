@@ -12,7 +12,6 @@ data class Order (
     var id: String? = "",
     var userId: String? = "",
     var editorId: String? = "",
-    var photoUrls: List<String?>?= null,
     var jobUrls: List<String?>?= null,
     var complete: Boolean? = false,
     var count: Int? = 1,

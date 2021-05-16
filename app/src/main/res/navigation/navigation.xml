@@ -25,9 +25,6 @@
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_homeFragment_to_orderFragment"
-            app:destination="@id/orderFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_infoFragment"
             app:destination="@id/infoFragment" />
         <action
@@ -39,20 +36,6 @@
         <action
             android:id="@+id/action_homeFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/orderFragment"
-        android:name="xyz.bluepencil.bluepencil.ui.OrderFragment"
-        android:label="Order"
-        tools:layout="@layout/fragment_order">
-        <argument
-            android:name="selectedPlacard"
-            app:argType="xyz.bluepencil.bluepencil.model.Placard" />
-        <action
-            android:id="@+id/action_orderFragment_to_inboxFragment"
-            app:destination="@id/inboxFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/inboxFragment"
@@ -70,9 +53,6 @@
         android:label="@string/jobs"
         tools:layout="@layout/fragment_job" >
         <action
-            android:id="@+id/action_jobFragment_to_orderCompleteFragment"
-            app:destination="@id/orderCompleteFragment" />
-        <action
             android:id="@+id/action_jobFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/homeFragment"
@@ -80,19 +60,6 @@
         <action
             android:id="@+id/action_jobFragment_to_graphicOrderComplete"
             app:destination="@id/graphicOrderComplete" />
-    </fragment>
-    <fragment
-        android:id="@+id/orderCompleteFragment"
-        android:name="xyz.bluepencil.bluepencil.ui.OrderCompleteFragment"
-        android:label="Complete Order">
-        <action
-            android:id="@+id/action_orderCompleteFragment_to_jobFragment"
-            app:destination="@id/jobFragment"
-            app:popUpTo="@id/orderCompleteFragment"
-            app:popUpToInclusive="true" />
-        <argument
-            android:name="selectedOrder"
-            app:argType="xyz.bluepencil.bluepencil.model.Order" />
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
