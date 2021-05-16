@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firestore.v1.StructuredQuery
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import org.json.JSONObject
@@ -21,8 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import xyz.bluepencil.bluepencil.databinding.ActivityPaymentBinding
 import xyz.bluepencil.bluepencil.model.Order
-import xyz.bluepencil.bluepencil.model.Placard
-import xyz.bluepencil.bluepencil.ui.OrderCompleteFragmentArgs
+
 
 
 class PaymentActivity : AppCompatActivity(), PaymentResultListener {
@@ -39,7 +37,6 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_payment)
         order = PaymentActivityArgs.fromBundle(intent.extras!!).selectedOrder
         val amount = PaymentActivityArgs.fromBundle(intent.extras!!).cost
-
 
         binding.specification.text = order.remark
         binding.cost.text = getCurrencyString(amount)

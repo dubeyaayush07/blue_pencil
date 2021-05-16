@@ -65,9 +65,6 @@ class HomeFragment : Fragment() {
                         "Self Order not Allowed",
                         Snackbar.LENGTH_SHORT
                     ).show()
-                }
-                else if (placard.type == "photo") {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToOrderFragment(placard))
                 } else {
                     findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToGraphicOrderFragment(placard))
                 }

@@ -44,9 +44,8 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
     class ViewHolder private constructor(itemView: View): RecyclerView.ViewHolder(itemView) {
         val orderRemark: TextView = itemView.findViewById(R.id.order_remark)
         val date: TextView = itemView.findViewById(R.id.date)
-        val orderType: TextView = itemView.findViewById(R.id.order_type)
+        val orderStatus: TextView = itemView.findViewById(R.id.order_status)
         val completeOrderBtn: Button = itemView.findViewById(R.id.complete_order_btn)
-        val chipGroup: ChipGroup = itemView.findViewById(R.id.chipGroup)
         val linkChip: Chip = itemView.findViewById(R.id.linkChip)
         val contact: Chip = itemView.findViewById(R.id.contact)
         val count: Chip = itemView.findViewById(R.id.orderCount)
@@ -56,7 +55,13 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
             date.text = formatDate(item.date)
             orderRemark.text = item.remark
             count.text = item.count.toString()
-            orderType.text = if (item.type == "photo") "Photo" else "Graphic"
+            if (item.complete == true) {
+                orderStatus.text = "Completed"
+                completeOrderBtn.text = "Edit Order"
+            } else {
+                orderStatus.text = "TODO"
+                completeOrderBtn.text = "Complete Order"
+            }
 
             contact.setOnClickListener { view->
                 ref.whereEqualTo("uid", item.userId).get()
@@ -67,26 +72,6 @@ class OrderJobAdapter(private val onClickListener: OnClickListener): RecyclerVie
                     .addOnFailureListener {
                         Toast.makeText(view.context, "Operation Failed", Toast.LENGTH_SHORT).show()
                     }
-            }
-
-
-
-            val size = item.photoUrls?.size ?: 0
-
-            for (i in 0..2) {
-                val v: View = chipGroup.getChildAt(i)
-                if (v is Chip) {
-                    if (i < size) {
-                        v.visibility = View.VISIBLE
-                        v.setOnClickListener {
-                            Intent(Intent.ACTION_VIEW, Uri.parse(item.photoUrls?.get(i))).apply {
-                                v.context.startActivity(this)
-                            }
-                        }
-                    } else {
-                        v.visibility = View.GONE
-                    }
-                }
             }
 
             if (item.link.isNullOrBlank()) {

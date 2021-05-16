@@ -1,25 +1,19 @@
 package xyz.bluepencil.bluepencil
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
+
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import xyz.bluepencil.bluepencil.databinding.FragmentGraphicOrderCompleteBinding
-
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import xyz.bluepencil.bluepencil.model.Order
 import java.io.IOException
 
@@ -32,7 +26,7 @@ class GraphicOrderComplete : Fragment() {
     private val IMAGE_UPLOAD_REQUEST_CODE: Int = 2003
 
     companion object {
-        const val TAG = "OrderCompleteFragment"
+        const val TAG = "GraphicOrderCompleteFragment"
     }
 
     override fun onCreateView(
@@ -49,81 +43,18 @@ class GraphicOrderComplete : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (isOnline()) {
-            if (order.count == 1) {
-                launchUpload()
-            } else {
-                binding.uploadTxt.text = "Order Count ${order.count}"
-                binding.jobUrlTxt.visibility = View.VISIBLE
-                binding.submitBtn.visibility = View.VISIBLE
-
-            }
-
-        } else {
-            Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
-                .show()
-            findNavController().navigate(GraphicOrderCompleteDirections.actionGraphicOrderCompleteToJobFragment())
-
-        }
+        binding.uploadTxt.text = "Order Count ${order.count}"
 
         binding.submitBtn.setOnClickListener {
-            if (binding.jobUrlTxt.text.isNullOrBlank()) {
-                Snackbar.make(binding.root, "Job Url Required", Snackbar.LENGTH_LONG)
+            if (binding.jobUrlTxt.text.isNullOrBlank() ||
+                !URLUtil.isValidUrl(binding.jobUrlTxt.text.toString())) {
+                Snackbar.make(binding.root, "Valid Job Url Required", Snackbar.LENGTH_LONG)
                     .show()
-            } else {
-                saveOrder(binding.jobUrlTxt.text.toString())
-            }
-        }
-    }
+            } else if (!isOnline()) {
+                Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
+                    .show()
+            } else saveOrder(binding.jobUrlTxt.text.toString())
 
-    private fun launchUpload() {
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-            type = "image/*"
-            startActivityForResult(this, IMAGE_UPLOAD_REQUEST_CODE)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == IMAGE_UPLOAD_REQUEST_CODE) {
-                if (data != null && data.data != null) {
-                    val uri = data.data
-                    var user = FirebaseAuth.getInstance().currentUser
-                    if (user != null && uri != null) uploadPhoto(uri, user)
-                }
-            }
-        } else {
-            Snackbar.make(binding.root, "Operation Failed", Snackbar.LENGTH_LONG)
-                .show()
-
-            findNavController().navigate(GraphicOrderCompleteDirections.actionGraphicOrderCompleteToJobFragment())
-        }
-    }
-
-    private fun uploadPhoto(uri: Uri, user: FirebaseUser) {
-        val storageReference = FirebaseStorage.getInstance().reference
-
-        val imageRef = storageReference.child("images/" + user.uid + "/" + uri.lastPathSegment)
-        val uploadTask = imageRef.putFile(uri)
-        binding.progressBar.visibility = View.VISIBLE
-
-        uploadTask.addOnProgressListener{
-            val progress = (100.0 * it.bytesTransferred) / it.totalByteCount
-            binding.progressBar.progress = progress.toInt()
-
-        }.addOnSuccessListener {
-            binding.progressBar.visibility = View.GONE
-            val downloadUrl = imageRef.downloadUrl
-            downloadUrl.addOnSuccessListener {
-                val url = it.toString()
-                saveOrder(url)
-            }
-
-        }.addOnFailureListener {
-            Snackbar.make(binding.root, "Photo Upload Failed", Snackbar.LENGTH_LONG)
-                .show()
-            findNavController().navigate(GraphicOrderCompleteDirections.actionGraphicOrderCompleteToJobFragment())
         }
     }
 

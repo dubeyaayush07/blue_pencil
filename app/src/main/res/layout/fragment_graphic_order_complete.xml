@@ -7,16 +7,6 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="-6dp"
-            android:max="100"
-            android:progress="15"
-            android:visibility="gone"
-            android:scaleY="2" />
 
         <TextView
             style="@style/CardTextView"
@@ -25,7 +15,7 @@
             android:textAlignment="center"
             android:layout_marginLeft="2dp"
             android:id="@+id/uploadTxt"
-            android:text="Uploading..." />
+            android:text="Order count 3" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -38,7 +28,6 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:id="@+id/jobUrlTxt"
                 />
 
@@ -51,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Submit"
-            android:visibility="gone"
             app:rippleColor="@color/white"
             style="@style/btn_style" />
 

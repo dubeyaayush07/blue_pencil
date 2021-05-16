@@ -1,14 +1,11 @@
 package xyz.bluepencil.bluepencil.ui
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import xyz.bluepencil.bluepencil.R
@@ -21,7 +18,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import xyz.bluepencil.bluepencil.PaymentActivity
 import java.io.IOException
 
 class GraphicOrderFragment : Fragment() {
@@ -71,7 +67,7 @@ class GraphicOrderFragment : Fragment() {
     }
 
     private fun checkOrderDetails() {
-        if (checkOrderCount()) return
+        if (checkOrder()) return
         else if (binding.specificationTxt.text.isNullOrBlank()) {
             Snackbar.make(
                 binding.root,
@@ -91,7 +87,7 @@ class GraphicOrderFragment : Fragment() {
             val collection = Firebase.firestore.collection("users")
             collection.document(user!!.id.toString()).update("freeCount", user!!.freeCount)
                 .addOnSuccessListener {
-                    val amount = 0
+                    val amount = placard.cost * (binding.orderCount.text.toString().toInt() - 1)
                     val order = getOrder()
                     findNavController().navigate(GraphicOrderFragmentDirections.actionGraphicOrderFragmentToPaymentActivity(order, amount))
                 }
@@ -122,7 +118,7 @@ class GraphicOrderFragment : Fragment() {
         )
     }
 
-    private fun checkOrderCount(): Boolean {
+    private fun checkOrder(): Boolean {
         if (binding.orderCount.text.isNullOrBlank()) {
             Snackbar.make(
                 binding.root,
@@ -135,6 +131,14 @@ class GraphicOrderFragment : Fragment() {
             Snackbar.make(
                 binding.root,
                 "Order Count should be between 1 and 100",
+                Snackbar.LENGTH_LONG
+            ).show()
+            return true
+        } else if (!binding.linkTxt.text.isNullOrBlank() &&
+                !URLUtil.isValidUrl(binding.linkTxt.text.toString())) {
+            Snackbar.make(
+                binding.root,
+                "Invalid Resource Link",
                 Snackbar.LENGTH_LONG
             ).show()
             return true

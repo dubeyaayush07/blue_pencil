@@ -56,12 +56,7 @@ class JobFragment : Fragment() {
         val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.bottomNavView)
         bottomNavigationView.visibility = View.VISIBLE
         adapter = OrderJobAdapter(OrderJobAdapter.OnClickListener {
-            if (it.type == "photo") {
-                findNavController().navigate(JobFragmentDirections.actionJobFragmentToOrderCompleteFragment(it))
-            } else {
-                findNavController().navigate(JobFragmentDirections.actionJobFragmentToGraphicOrderComplete(it))
-            }
-
+            findNavController().navigate(JobFragmentDirections.actionJobFragmentToGraphicOrderComplete(it))
         })
         binding.orderList.adapter = adapter
         fetchOrders()
@@ -74,7 +69,6 @@ class JobFragment : Fragment() {
         db.collection("orders")
             .orderBy("date", Query.Direction.DESCENDING)
             .whereEqualTo("editorId", userId)
-            .whereEqualTo("complete", false)
             .get()
             .addOnSuccessListener { result ->
                 adapter.data = result.toObjects(Order::class.java)
