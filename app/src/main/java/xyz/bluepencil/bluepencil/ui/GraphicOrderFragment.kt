@@ -114,7 +114,7 @@ class GraphicOrderFragment : Fragment() {
             if (count < 10) {
                 Snackbar.make(
                     binding.root,
-                    "You need to order at least 10 graphics",
+                    "You need to order at least 10 graphics to avail this promo code",
                     Snackbar.LENGTH_LONG
                 ).show()
             } else {
