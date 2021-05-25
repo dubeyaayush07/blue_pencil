@@ -18,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_graphic_order.*
 import java.io.IOException
 
 class GraphicOrderFragment : Fragment() {
@@ -88,8 +89,7 @@ class GraphicOrderFragment : Fragment() {
             collection.document(user!!.id.toString()).update("freeCount", user!!.freeCount)
                 .addOnSuccessListener {
                     val amount = placard.cost * (binding.orderCount.text.toString().toInt() - 1)
-                    val order = getOrder()
-                    findNavController().navigate(GraphicOrderFragmentDirections.actionGraphicOrderFragmentToPaymentActivity(order, amount))
+                    sendOrder(amount)
                 }
                 .addOnFailureListener {
                     Snackbar.make(
@@ -102,8 +102,34 @@ class GraphicOrderFragment : Fragment() {
         }
 
         val amount = placard.cost * binding.orderCount.text.toString().toInt()
-        val order = getOrder()
-        findNavController().navigate(GraphicOrderFragmentDirections.actionGraphicOrderFragmentToPaymentActivity(order, amount))
+        sendOrder(amount)
+    }
+
+    private fun sendOrder(amount: Int) {
+        if (binding.promoCode.text.isNullOrBlank()) {
+            val order = getOrder()
+            findNavController().navigate(GraphicOrderFragmentDirections.actionGraphicOrderFragmentToPaymentActivity(order, amount))
+        } else if (binding.promoCode.text.toString().equals("GET15BULK")) {
+            val count = binding.orderCount.text.toString().toInt()
+            if (count < 10) {
+                Snackbar.make(
+                    binding.root,
+                    "You need to order at least 10 graphics",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            } else {
+                val newAmount = amount - ((amount * 15) / 100)
+                val order = getOrder()
+                findNavController().navigate(GraphicOrderFragmentDirections.actionGraphicOrderFragmentToPaymentActivity(order, newAmount))
+            }
+        } else {
+            Snackbar.make(
+                binding.root,
+                "Invalid Promo Code",
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
+
     }
 
     private fun getOrder(): Order {
