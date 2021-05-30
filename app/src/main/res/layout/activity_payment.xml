@@ -3,10 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
             tools:context=".PaymentActivity">
 
 
@@ -30,18 +33,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="16dp"
+                android:layout_marginVertical="50dp"
                 android:backgroundTint="@color/white"
                 android:elevation="5dp"
                 android:padding="5dp"
                 app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
                 tools:layout_editor_absoluteX="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginBottom="10dp"
                     tools:layout_editor_absoluteX="12dp"
                     tools:layout_editor_absoluteY="167dp">
 
@@ -80,9 +86,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="52dp"
                             android:layout_marginBottom="4dp"
-                            android:textColor="#283593"
                             android:gravity="center"
                             android:text="0"
+                            android:textColor="#283593"
                             android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent" />
@@ -120,9 +126,9 @@
                             style="@style/CardTextView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#283593"
                             android:gravity="center"
                             android:text="Mayur Tantwar"
+                            android:textColor="#283593"
                             android:textSize="15sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -139,9 +145,9 @@
                             style="@style/CardTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
                             android:gravity="center"
                             android:text="Job Description"
-                            android:layout_marginBottom="5dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -153,12 +159,12 @@
                         android:id="@+id/specification"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:gravity="center_horizontal"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginBottom="15dp"
+                        android:gravity="center_horizontal"
                         android:text="lorem ipsum and graphic design logo creation for tmy company"
+                        android:textAlignment="center"
                         android:textSize="15sp" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -181,22 +187,22 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="80dp">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/textView16"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:text="For Google Pay, Cards and other payment options"
+                            android:layout_marginHorizontal="12dp"
+                            android:text="For Users of Google Pay, Cards and other payment options"
                             android:textAlignment="center"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/pay_other" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/pay_other"
@@ -206,22 +212,17 @@
                             android:layout_marginHorizontal="18dp"
                             android:backgroundTint="#283593"
                             android:text="Razorpay"
-                            app:layout_constraintBottom_toTopOf="@+id/textView16"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
                             app:rippleColor="@color/white" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
