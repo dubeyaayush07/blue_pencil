@@ -20,7 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import xyz.bluepencil.bluepencil.databinding.ActivityPaymentBinding
 import xyz.bluepencil.bluepencil.model.Order
-
+import java.io.IOException
 
 
 class PaymentActivity : AppCompatActivity(), PaymentResultListener {
@@ -44,13 +44,25 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
 
         Checkout.preload(applicationContext)
         binding.pay.setOnClickListener {
-            if (amount == 0) saveOrder()
-            else payUsingUpi(amount)
+           if (isOnline()) {
+               hidePayButtons()
+               if (amount == 0) saveOrder()
+               else payUsingUpi(amount)
+           } else {
+               Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
+                   .show()
+           }
         }
 
         binding.payOther.setOnClickListener {
-            if (amount == 0) saveOrder()
-            else getOrderId(amount)
+            if (isOnline()) {
+                hidePayButtons()
+                if (amount == 0) saveOrder()
+                else getOrderId(amount)
+            } else {
+                Snackbar.make(binding.root, "Internet Connection Required", Snackbar.LENGTH_LONG)
+                    .show()
+            }
         }
 
     }
@@ -91,6 +103,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
         } else {
             Snackbar.make(binding.root, "Operation Failed", Snackbar.LENGTH_LONG)
                 .show()
+            showPayButtons()
         }
     }
 
@@ -123,6 +136,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
             } else if ("Payment cancelled by user." == paymentCancel) {
                 Snackbar.make(binding.root, "Payment cancelled by user.", Snackbar.LENGTH_SHORT)
                     .show()
+                showPayButtons()
                 Log.e("UPI", "Cancelled by user: $approvalRefNo")
             } else {
                 Snackbar.make(
@@ -130,10 +144,12 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
                     "Transaction failed. Please try again",
                     Snackbar.LENGTH_SHORT
                 ).show()
+                showPayButtons()
                 Log.e("UPI", "failed payment: $approvalRefNo")
             }
         } else {
             Log.e("UPI", "Internet issue: ")
+            showPayButtons()
             Snackbar.make(
                 binding.root,
                 "Internet connection is not available. Please check and try again",
@@ -165,7 +181,8 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
             options.put("retry", retryObj)
 
             co.open(activity, options)
-        }catch (e: Exception){
+        } catch (e: Exception) {
+            showPayButtons()
             Toast.makeText(activity, "Error in payment: " + e.message, Toast.LENGTH_LONG).show()
             e.printStackTrace()
         }
@@ -192,6 +209,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
         }
 
         task.addOnFailureListener {
+            showPayButtons()
             Snackbar.make(binding.root, "Failed to take your order please contact support", Snackbar.LENGTH_LONG)
                 .show()
         }
@@ -200,6 +218,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
 
     override fun onPaymentError(code: Int, response: String) {
         try {
+            showPayButtons()
             Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Log.e(TAG, "Exception in onPaymentError", e)
@@ -212,6 +231,7 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
         OrderApi.retrofitService.getOrderID("$amount").enqueue(object : Callback<String> {
             override fun onFailure(call: Call<String>, t: Throwable) {
                 binding.loadingBar.visibility = View.GONE
+                showPayButtons()
                 Toast.makeText(applicationContext, t.message, Toast.LENGTH_SHORT).show()
             }
 
@@ -221,4 +241,29 @@ class PaymentActivity : AppCompatActivity(), PaymentResultListener {
             }
         })
     }
+
+    private fun hidePayButtons() {
+        binding.payOther.isEnabled = false
+        binding.pay.isEnabled = false
+    }
+
+    private fun showPayButtons() {
+        binding.payOther.isEnabled = true
+        binding.pay.isEnabled = true
+    }
+
+    private fun isOnline(): Boolean {
+        val runtime = Runtime.getRuntime()
+        try {
+            val ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8")
+            val exitValue = ipProcess.waitFor()
+            return exitValue == 0
+        } catch (e: IOException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
 }
